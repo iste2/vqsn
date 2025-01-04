@@ -18,8 +18,9 @@ export function Waitlist() {
       await new Promise(resolve => setTimeout(resolve, 1000)) // Simulated API call
       setStatus("success")
       setEmail("")
-    } catch (error) {
-      setStatus("error")
+    } catch (error: unknown) {
+      console.error("Error submitting to waitlist:", error)
+      setStatus("error") 
     } finally {
       setIsSubmitting(false)
     }
