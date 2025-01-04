@@ -8,7 +8,7 @@ export function Navbar() {
       <div className="flex h-16 items-center px-4 container mx-auto justify-between">
         <div className="flex items-center gap-2">
           <svg
-            className="h-6 w-6"
+            className="h-6 w-6 rotate-180"
             viewBox="0 0 1740 1510"
             xmlns="http://www.w3.org/2000/svg"
           >
