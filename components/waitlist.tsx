@@ -27,7 +27,7 @@ export function Waitlist() {
   }
 
   return (
-    <section className="flex items-center justify-center min-h-[50vh] py-24 bg-slate-50">
+    <section id="waitlist" className="flex items-center justify-center min-h-[50vh] py-24 bg-slate-50">
       <div className="container px-4 md:px-6 max-w-6xl mx-auto">
         <div className="flex flex-col items-center space-y-6 text-center">
           <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">

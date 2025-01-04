@@ -3,6 +3,13 @@
 import { Button } from "@/components/ui/button"
 
 export function Navbar() {
+  const handleWaitlistClick = () => {
+    const waitlistSection = document.getElementById('waitlist')
+    if (waitlistSection) {
+      waitlistSection.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+
   return (
     <nav className="border-b bg-background">
       <div className="flex h-16 items-center px-4 container mx-auto justify-between">
@@ -21,7 +28,11 @@ export function Navbar() {
             ValueSeeker
           </span>
         </div>
-        <Button variant="default" size="default">
+        <Button 
+          variant="default" 
+          size="default"
+          onClick={handleWaitlistClick}
+        >
           Join Waitlist
         </Button>
       </div>
