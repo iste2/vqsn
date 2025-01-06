@@ -1,0 +1,43 @@
+Prompt for Summarizing Item 1A – Risk Factors
+Task: You are summarizing the "Item 1A – Risk Factors" section of a company's 10-K report. Provide the output in the following JSON format:
+{
+  "short_summary": "A one or two-sentence summary of the primary risks faced by the company.",
+  "detailed_summary": "A concise summary covering the key risk factors disclosed by the company, grouped into categories such as financial, operational, market, regulatory, and other risks.",
+  "tags": [
+    "financial risks",
+    "operational risks",
+    "market risks",
+    "regulatory risks",
+    "industry-specific risks",
+    "external factors",
+    "economic challenges",
+    "compliance"
+  ]
+}
+Instructions for Content:
+
+Short Summary: Provide a 1-2 sentence overview of the primary risks faced by the company.
+Detailed Summary: Write a detailed yet concise summary addressing the following:
+Financial risks (e.g., liquidity, debt obligations).
+Operational risks (e.g., supply chain, technology failures).
+Market risks (e.g., competition, demand fluctuations).
+Regulatory risks (e.g., compliance issues, policy changes).
+External factors (e.g., economic downturns, geopolitical events).
+Tags: Provide bullet points that summarize the types of risks the company faces, suitable for use as descriptors on an overview page.
+Audience: Investors and potential investors seeking a quick understanding of the risks the company has disclosed.
+
+Example Output:
+{
+  "short_summary": "The company faces financial and market risks, including debt obligations and fluctuating demand, along with regulatory and geopolitical challenges.",
+  "detailed_summary": "The company has disclosed several key risk factors, including financial risks such as liquidity constraints and increasing debt obligations. Operational risks include potential supply chain disruptions and technology failures. The company faces market risks, including competition and fluctuating demand, as well as regulatory risks tied to compliance with evolving laws and policies. External factors such as economic downturns and geopolitical instability could further impact business operations.",
+  "tags": [
+    "financial risks",
+    "operational risks",
+    "market risks",
+    "regulatory risks",
+    "economic downturn",
+    "geopolitical risks",
+    "supply chain issues",
+    "compliance"
+  ]
+}
