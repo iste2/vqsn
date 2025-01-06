@@ -1,6 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 export function Navbar() {
   const handleWaitlistClick = () => {
@@ -13,7 +14,7 @@ export function Navbar() {
   return (
     <nav className="border-b bg-background">
       <div className="flex h-16 items-center px-4 container mx-auto justify-between">
-        <div className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-2">
           <svg
             className="h-6 w-6 rotate-180"
             viewBox="0 0 1740 1510"
@@ -27,14 +28,22 @@ export function Navbar() {
           <span className="text-xl font-semibold tracking-tight">
             ValueSeeker
           </span>
+        </Link>
+        <div className="flex items-center gap-6">
+          <Link 
+            href="/examples" 
+            className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+          >
+            Examples
+          </Link>
+          <Button 
+            variant="default" 
+            size="default"
+            onClick={handleWaitlistClick}
+          >
+            Join Waitlist
+          </Button>
         </div>
-        <Button 
-          variant="default" 
-          size="default"
-          onClick={handleWaitlistClick}
-        >
-          Join Waitlist
-        </Button>
       </div>
     </nav>
   )
