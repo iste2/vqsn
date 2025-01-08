@@ -34,10 +34,10 @@ export function About() {
   return (
     <section className="container max-w-5xl mx-auto py-24 space-y-16">
       <div className="space-y-4 text-center">
-        <h2 className="text-3xl font-bold sm:text-4xl">About ValueSeeker</h2>
+        <h2 className="text-3xl font-bold sm:text-4xl">About VQSN</h2>
         <p className="max-w-[85ch] mx-auto text-muted-foreground">
           Investing in the stock market should be driven by quality insights and sound analysis, 
-          not fleeting trends or technical charts. At ValueSeeker, we revolutionize how investors 
+          not fleeting trends or technical charts. At VQSN, we revolutionize how investors 
           approach the market by providing a comprehensive, AI-powered tool tailored for quality 
           and value investors.
         </p>
@@ -51,7 +51,7 @@ export function About() {
               Advanced Stock Analysis
             </AccordionTrigger>
             <AccordionContent className="text-muted-foreground">
-              ValueSeeker performs in-depth analyses of all listed stocks, focusing on the fundamentals 
+              VQSN performs in-depth analyses of all listed stocks, focusing on the fundamentals 
               that matter most. Our quality analysis evaluates critical factors like market position, 
               business model, and management competence. Simultaneously, our fundamental analysis 
               dives deep into financial reports, employing models such as discounted cash flow (DCF) 
@@ -63,7 +63,7 @@ export function About() {
               Smart Portfolio Management
             </AccordionTrigger>
             <AccordionContent className="text-muted-foreground">
-              With ValueSeeker, you can seamlessly create and manage portfolios. Using principles from 
+              With VQSN, you can seamlessly create and manage portfolios. Using principles from 
               Modern Portfolio Theory, our tool optimizes your portfolio for maximum efficiency, 
               balancing risk and return with precision.
             </AccordionContent>
@@ -87,14 +87,14 @@ export function About() {
           <WorkflowStep
             icon={<BarChart4 className="w-5 h-5" />}
             title="Build and Optimize Portfolios"
-            description="Select stocks, build portfolios, and let ValueSeeker ensure optimal performance through automated balancing."
+            description="Select stocks, build portfolios, and let VQSN ensure optimal performance through automated balancing."
           />
         </div>
       </div>
 
       <p className="text-center text-lg max-w-3xl mx-auto">
-        ValueSeeker is the essential companion for investors who prioritize deep research and strategic investment. 
-        Forget trends—focus on true business value with ValueSeeker.
+        VQSN is the essential companion for investors who prioritize deep research and strategic investment. 
+        Forget trends—focus on true business value with VQSN.
       </p>
     </section>
   )

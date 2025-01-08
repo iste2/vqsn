@@ -11,7 +11,7 @@ export function Hero() {
     <div className="flex min-h-[80vh] flex-col items-center justify-center space-y-8 px-4 text-center">
       <div className="space-y-4">
         <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl">
-          Value & Quality Stock Machine
+          Value & Quality Stock Navigator
         </h1>
         <p className="mx-auto max-w-[700px] text-lg text-muted-foreground sm:text-xl">
           The AI-Powered Tool for Value and Quality Investors

@@ -20,7 +20,7 @@ export function TargetUsers() {
   return (
     <section className="container mx-auto px-4 py-24">
       <h2 className="mb-12 text-center text-3xl font-bold tracking-tight">
-        Who is ValueSeeker for?
+        Who is VQSN for?
       </h2>
       
       <div className="mx-auto max-w-3xl space-y-6">
@@ -40,7 +40,7 @@ export function TargetUsers() {
         </div>
         
         <p className="mt-8 text-center text-lg text-muted-foreground">
-          If this sounds like you, ValueSeeker was built to help you succeed.
+          If this sounds like you, VQSN was built to help you succeed.
         </p>
       </div>
     </section>
