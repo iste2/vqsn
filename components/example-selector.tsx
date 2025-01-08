@@ -9,18 +9,16 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { CompanyAnalysisCard } from "@/components/company-analysis-card"
-import ibioData from "@/examples/ibio/ibio.json"
-import regoData from "@/examples/rego/rego.json"
+import airbnbData from "@/examples/airbnb.json"
 
 const examples = [
-  { id: "ibio", name: "iBio Example", data: ibioData },
-  { id: "rego", name: "REGO Payment Architectures Example", data: regoData },
+  { data: airbnbData },
 ]
 
 export function ExampleSelector() {
   const [selected, setSelected] = useState<string>("")
 
-  const selectedExample = examples.find((example) => example.id === selected)
+  const selectedExample = examples.find((example) => example.data.ticker === selected)
 
   return (
     <div>
@@ -30,8 +28,8 @@ export function ExampleSelector() {
         </SelectTrigger>
         <SelectContent>
           {examples.map((example) => (
-            <SelectItem key={example.id} value={example.id}>
-              {example.name}
+            <SelectItem key={example.data.ticker} value={example.data.ticker}>
+              {example.data.name}
             </SelectItem>
           ))}
         </SelectContent>
