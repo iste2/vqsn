@@ -1,11 +1,8 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { useState } from "react"
 
 export function Hero() {
-  const [email, setEmail] = useState("")
 
   return (
     <div className="flex min-h-[80vh] flex-col items-center justify-center space-y-8 px-4 text-center">
@@ -15,24 +12,20 @@ export function Hero() {
           <span className="block">AI-Powered Analysis</span>
         </h1>
         <p className="mx-auto max-w-[700px] text-lg text-muted-foreground sm:text-xl">
-        VQSN combines quality analysis and fundamental valuation to help you make informed investment decisions. From stock research to portfolio optimization - all in one platform.
+        VQSN (Value & Quality Stock Navigator) combines quality analysis and fundamental valuation to help you make informed investment decisions. From stock research to portfolio optimization - all in one platform.
         </p>
       </div>
       
-      <div className="flex w-full max-w-sm flex-col gap-2 sm:flex-row">
-        <Input
-          type="email"
-          placeholder="Enter your email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="h-12 text-base px-4"
-        />
-        <Button 
-          className="h-12 px-8 text-base font-medium"
-        >
-          Join Waitlist
-        </Button>
-      </div>
+      
+      <Button 
+        className="h-12 px-8 text-base font-medium"
+        onClick={() => {
+          const waitlistSection = document.querySelector('#waitlist')
+          waitlistSection?.scrollIntoView({ behavior: 'smooth' })
+        }}
+      >
+        Join Waitlist
+      </Button>
     </div>
   )
 } 
