@@ -95,6 +95,13 @@ export function ExampleSelector({ examples }: ExampleSelectorProps) {
                   <div className="grid gap-3">
                     {Object.entries(selectedExample.characteristics).map(([key, char]) => (
                       <div key={key} className="flex items-center gap-3 bg-gray-50 p-3 rounded-lg">
+                        <div className={`w-2 h-8 rounded-full ${
+                          char.score >= 4 
+                            ? "bg-green-500" 
+                            : char.score >= 2
+                            ? "bg-yellow-500"
+                            : "bg-red-500"
+                        }`} />
                         <div className="flex-1">
                           <span className="text-sm font-medium capitalize">{key.replace(/([A-Z])/g, ' $1')}</span>
                           <div className="flex items-center gap-2 mt-1">
@@ -126,6 +133,13 @@ export function ExampleSelector({ examples }: ExampleSelectorProps) {
                   <div className="grid gap-3">
                     {Object.entries(selectedExample.porterAnalysis).map(([key, force]) => (
                       <div key={key} className="flex items-center gap-3 bg-gray-50 p-3 rounded-lg">
+                        <div className={`w-2 h-8 rounded-full ${
+                          force.riskScore >= 4 
+                            ? "bg-green-500" 
+                            : force.riskScore >= 2
+                            ? "bg-yellow-500"
+                            : "bg-red-500"
+                        }`} />
                         <div className="flex-1">
                           <span className="text-sm font-medium capitalize">{key.replace(/([A-Z])/g, ' $1')}</span>
                           <div className="flex items-center gap-2 mt-1">
