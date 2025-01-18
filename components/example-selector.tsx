@@ -56,7 +56,7 @@ export function ExampleSelector({ examples }: ExampleSelectorProps) {
   const selectedExample = examples[selected]
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 mb-8">
       <Select value={selected} onValueChange={setSelected}>
         <SelectTrigger className="w-full">
           <SelectValue placeholder="Select an example" />
@@ -299,32 +299,22 @@ export function ExampleSelector({ examples }: ExampleSelectorProps) {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <h3 className="font-medium text-gray-800">Additional Analysis Features</h3>
-                  <ul className="grid gap-2">
-                    <li className="flex items-center gap-2 text-gray-600">
-                      <span className="inline-block w-2 h-2 rounded-full bg-blue-400" />
-                      Key Financial Metrics & Ratios
-                    </li>
-                    <li className="flex items-center gap-2 text-gray-600">
-                      <span className="inline-block w-2 h-2 rounded-full bg-blue-400" />
-                      Discounted Cash Flow (DCF) Analysis
-                    </li>
-                    <li className="flex items-center gap-2 text-gray-600">
-                      <span className="inline-block w-2 h-2 rounded-full bg-blue-400" />
-                      Momentum Analysis
-                    </li>
-                  </ul>
-                </div>
-                <div className="flex justify-center">
-                  <a
-                    href="/waitlist"
-                    className="inline-flex items-center justify-center rounded-md bg-primary px-8 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary disabled:pointer-events-none disabled:opacity-50"
-                  >
-                    Join Waitlist
-                  </a>
-                </div>
+              <div className="space-y-2">
+                <h3 className="font-medium text-gray-800">Additional Analysis Features</h3>
+                <ul className="grid gap-2">
+                  <li className="flex items-center gap-2 text-gray-600">
+                    <span className="inline-block w-2 h-2 rounded-full bg-blue-400" />
+                    Key Financial Metrics & Ratios
+                  </li>
+                  <li className="flex items-center gap-2 text-gray-600">
+                    <span className="inline-block w-2 h-2 rounded-full bg-blue-400" />
+                    Discounted Cash Flow (DCF) Analysis
+                  </li>
+                  <li className="flex items-center gap-2 text-gray-600">
+                    <span className="inline-block w-2 h-2 rounded-full bg-blue-400" />
+                    Momentum Analysis
+                  </li>
+                </ul>
               </div>
             </CardContent>
           </Card>

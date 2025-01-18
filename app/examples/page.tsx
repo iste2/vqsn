@@ -1,4 +1,5 @@
 import { ExampleSelector } from "@/components/example-selector"
+import { Waitlist } from "@/components/waitlist"
 import { readFileSync, readdirSync } from "fs"
 import path from "path"
 
@@ -26,6 +27,7 @@ export default function ExamplesPage() {
       <div className="container max-w-4xl px-4 py-8">
         <h1 className="text-3xl font-bold mb-8 text-center">Company Analysis Examples</h1>
         <ExampleSelector examples={examples} />
+        <Waitlist />
       </div>
     </div>
   )
