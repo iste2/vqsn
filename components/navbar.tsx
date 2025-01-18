@@ -24,7 +24,7 @@ export function Navbar() {
             href="/examples" 
             className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
           >
-            Examples
+            View Examples
           </Link>
           <Button 
             variant="default" 

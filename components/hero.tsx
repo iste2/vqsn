@@ -1,6 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 export function Hero() {
 
@@ -16,16 +17,24 @@ export function Hero() {
         </p>
       </div>
       
-      
-      <Button 
-        className="h-12 px-8 text-base font-medium"
-        onClick={() => {
-          const waitlistSection = document.querySelector('#waitlist')
-          waitlistSection?.scrollIntoView({ behavior: 'smooth' })
-        }}
-      >
-        Join Waitlist
-      </Button>
+      <div className="flex gap-4">
+        <Button 
+          variant="outline"
+          className="h-12 px-8 text-base font-medium"
+          asChild
+        >
+          <Link href="/examples">View Examples</Link>
+        </Button>
+        <Button 
+          className="h-12 px-8 text-base font-medium"
+          onClick={() => {
+            const waitlistSection = document.querySelector('#waitlist')
+            waitlistSection?.scrollIntoView({ behavior: 'smooth' })
+          }}
+        >
+          Join Waitlist
+        </Button>
+      </div>
     </div>
   )
 } 
