@@ -58,11 +58,6 @@ Analysiere das beschriebene Geschäftsmodell systematisch auf folgende Charakter
    - Begründe deine Einschätzung
    - Nenne konkrete Beispiele aus der Unternehmensbeschreibung
 
-3. Fasse die Ergebnisse zusammen:
-   - Hauptcharakteristika (Ausprägung 4-5)
-   - Nebencharakteristika (Ausprägung 2-3)
-   - Nicht zutreffende Charakteristika (Ausprägung 0-1)
-
 ## Ausgabeformat
 
 Erstelle eine JSON-Struktur nach folgendem Schema:
@@ -71,7 +66,7 @@ Erstelle eine JSON-Struktur nach folgendem Schema:
 {
   "companyName": "string",
   "businessModelSummary": "string",
-  "analysis": {
+  "characteristics": {
     "shortLifeCycleBrands": {
       "score": "number (0-5)",
       "reasoning": "string",
@@ -102,11 +97,6 @@ Erstelle eine JSON-Struktur nach folgendem Schema:
       "reasoning": "string",
       "examples": ["string", "string"]
     }
-  },
-  "summary": {
-    "mainCharacteristics": ["string", "string"],
-    "secondaryCharacteristics": ["string", "string"],
-    "notApplicable": ["string", "string"]
   },
   "metadata": {
     "analysisDate": "string (YYYY-MM-DD)",
