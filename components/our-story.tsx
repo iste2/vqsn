@@ -15,7 +15,7 @@ const storyEntries: StoryEntry[] = [
     content: "During my finance studies at university, I discovered the power of theoretical and scientific approaches to stock analysis and portfolio management. These proven methods opened my eyes to a better way of investing. VQSN combines these academic principles with advanced AI to make professional-grade analysis accessible to everyone."
   },
   {
-    title: "My Vision",
+    title: "The Vision",
     content: "I am building VQSN to be your complete investment companion - from discovering promising stocks and analyzing their true value, to building optimized portfolios based on scientific principles. My goal is to empower investors with the tools and insights they need to make confident, well-researched investment decisions."
   }
 ]
