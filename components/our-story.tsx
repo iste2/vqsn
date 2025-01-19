@@ -22,22 +22,24 @@ const storyEntries: StoryEntry[] = [
 
 export function OurStory() {
   return (
-    <section className="container py-24 space-y-8">
-      <div className="text-center space-y-4">
-        <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">The Story</h2>
-        <p className="text-muted-foreground text-lg">Why I build VQSN</p>
-      </div>
+    <div className="w-full flex justify-center bg-background">
+      <section className="container py-24 flex flex-col items-center max-w-[1400px] px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-8">
+          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">The Story</h2>
+          <p className="text-muted-foreground text-lg">Why I build VQSN</p>
+        </div>
 
-      <ul className="space-y-6 max-w-2xl mx-auto">
-        {storyEntries.map((entry) => (
-          <li key={entry.title}>
-            <Card className="p-6 space-y-4">
-              <h3 className="font-semibold mb-2">{entry.title}</h3>
-              <p className="text-muted-foreground">{entry.content}</p>
-            </Card>
-          </li>
-        ))}
-      </ul>
-    </section>
+        <ul className="w-full max-w-2xl space-y-6">
+          {storyEntries.map((entry) => (
+            <li key={entry.title}>
+              <Card className="p-6 space-y-4">
+                <h3 className="font-semibold mb-2">{entry.title}</h3>
+                <p className="text-muted-foreground">{entry.content}</p>
+              </Card>
+            </li>
+          ))}
+        </ul>
+      </section>
+    </div>
   )
 } 
