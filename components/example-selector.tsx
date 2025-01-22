@@ -3,6 +3,8 @@
 import { useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select"
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./ui/collapsible"
+import { ChevronDown } from "lucide-react"
 
 interface Characteristic {
   score: number
@@ -53,6 +55,8 @@ interface ExampleSelectorProps {
 
 export function ExampleSelector({ examples }: ExampleSelectorProps) {
   const [selected, setSelected] = useState<string>(Object.keys(examples)[0])
+  const [isCharacteristicsOpen, setIsCharacteristicsOpen] = useState(false)
+  const [isIndustryOpen, setIsIndustryOpen] = useState(false)
   const selectedExample = examples[selected]
 
   return (
@@ -198,86 +202,100 @@ export function ExampleSelector({ examples }: ExampleSelectorProps) {
             </CardContent>
           </Card>
 
-          <Card>
-            <CardHeader>
-              <CardTitle>Business Model Characteristics</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              {Object.entries(selectedExample.characteristics).map(([key, char]) => (
-                <div key={key} className="space-y-2">
-                  <div className="flex items-center gap-2">
-                    <h3 className="font-semibold capitalize">{key.replace(/([A-Z])/g, ' $1')}</h3>
-                    <span className={`px-2 py-1 rounded text-sm ${
-                      char.score >= 4 
-                        ? "bg-green-100 text-green-800" 
-                        : char.score >= 2
-                        ? "bg-yellow-100 text-yellow-800"
-                        : "bg-red-100 text-red-800"
-                    }`}>
-                      {char.score}
-                    </span>
-                  </div>
-                  <p>{char.reasoning}</p>
-                  <ul className="list-disc pl-6">
-                    {char.examples.map((example, i) => (
-                      <li key={i}>{example}</li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </CardContent>
-          </Card>
+          <Collapsible open={isCharacteristicsOpen} onOpenChange={setIsCharacteristicsOpen}>
+            <Card>
+              <CardHeader>
+                <CollapsibleTrigger className="flex items-center justify-between w-full">
+                  <CardTitle>Business Model Characteristics</CardTitle>
+                  <ChevronDown className={`h-4 w-4 transition-transform ${isCharacteristicsOpen ? 'transform rotate-180' : ''}`} />
+                </CollapsibleTrigger>
+              </CardHeader>
+              <CollapsibleContent>
+                <CardContent className="space-y-6">
+                  {Object.entries(selectedExample.characteristics).map(([key, char]) => (
+                    <div key={key} className="space-y-2">
+                      <div className="flex items-center gap-2">
+                        <h3 className="font-semibold capitalize">{key.replace(/([A-Z])/g, ' $1')}</h3>
+                        <span className={`px-2 py-1 rounded text-sm ${
+                          char.score >= 4 
+                            ? "bg-green-100 text-green-800" 
+                            : char.score >= 2
+                            ? "bg-yellow-100 text-yellow-800"
+                            : "bg-red-100 text-red-800"
+                        }`}>
+                          {char.score}
+                        </span>
+                      </div>
+                      <p>{char.reasoning}</p>
+                      <ul className="list-disc pl-6">
+                        {char.examples.map((example, i) => (
+                          <li key={i}>{example}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </CardContent>
+              </CollapsibleContent>
+            </Card>
+          </Collapsible>
 
-          <Card>
-            <CardHeader>
-              <CardTitle>Industry Structure</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              {Object.entries(selectedExample.porterAnalysis).map(([key, force]) => (
-                <div key={key} className="space-y-2">
-                  <div className="flex items-center gap-2">
-                    <h3 className="font-semibold capitalize">{key.replace(/([A-Z])/g, ' $1')}</h3>
-                    <span className={`px-2 py-1 rounded text-sm ${
-                      force.riskScore >= 4 
-                        ? "bg-green-100 text-green-800" 
-                        : force.riskScore >= 2
-                        ? "bg-yellow-100 text-yellow-800"
-                        : "bg-red-100 text-red-800"
-                    }`}>
-                      {force.riskScore}
-                    </span>
-                  </div>
-                  <p>{force.reasoning}</p>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div>
-                      <h4 className="font-medium mb-2">Key Factors</h4>
-                      <ul className="list-disc pl-6">
-                        {force.keyFactors.map((factor, i) => (
-                          <li key={i}>{factor}</li>
-                        ))}
-                      </ul>
+          <Collapsible open={isIndustryOpen} onOpenChange={setIsIndustryOpen}>
+            <Card>
+              <CardHeader>
+                <CollapsibleTrigger className="flex items-center justify-between w-full">
+                  <CardTitle>Industry Structure</CardTitle>
+                  <ChevronDown className={`h-4 w-4 transition-transform ${isIndustryOpen ? 'transform rotate-180' : ''}`} />
+                </CollapsibleTrigger>
+              </CardHeader>
+              <CollapsibleContent>
+                <CardContent className="space-y-6">
+                  {Object.entries(selectedExample.porterAnalysis).map(([key, force]) => (
+                    <div key={key} className="space-y-2">
+                      <div className="flex items-center gap-2">
+                        <h3 className="font-semibold capitalize">{key.replace(/([A-Z])/g, ' $1')}</h3>
+                        <span className={`px-2 py-1 rounded text-sm ${
+                          force.riskScore >= 4 
+                            ? "bg-green-100 text-green-800" 
+                            : force.riskScore >= 2
+                            ? "bg-yellow-100 text-yellow-800"
+                            : "bg-red-100 text-red-800"
+                        }`}>
+                          {force.riskScore}
+                        </span>
+                      </div>
+                      <p>{force.reasoning}</p>
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                          <h4 className="font-medium mb-2">Key Factors</h4>
+                          <ul className="list-disc pl-6">
+                            {force.keyFactors.map((factor, i) => (
+                              <li key={i}>{factor}</li>
+                            ))}
+                          </ul>
+                        </div>
+                        <div>
+                          <h4 className="font-medium mb-2">Threats</h4>
+                          <ul className="list-disc pl-6">
+                            {force.threats.map((threat, i) => (
+                              <li key={i}>{threat}</li>
+                            ))}
+                          </ul>
+                        </div>
+                        <div>
+                          <h4 className="font-medium mb-2">Mitigations</h4>
+                          <ul className="list-disc pl-6">
+                            {force.mitigations.map((mitigation, i) => (
+                              <li key={i}>{mitigation}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
                     </div>
-                    <div>
-                      <h4 className="font-medium mb-2">Threats</h4>
-                      <ul className="list-disc pl-6">
-                        {force.threats.map((threat, i) => (
-                          <li key={i}>{threat}</li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div>
-                      <h4 className="font-medium mb-2">Mitigations</h4>
-                      <ul className="list-disc pl-6">
-                        {force.mitigations.map((mitigation, i) => (
-                          <li key={i}>{mitigation}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </CardContent>
-          </Card>
+                  ))}
+                </CardContent>
+              </CollapsibleContent>
+            </Card>
+          </Collapsible>
 
           <Card>
             <CardHeader>
