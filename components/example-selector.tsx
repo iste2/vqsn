@@ -62,11 +62,43 @@ export function ExampleSelector({ examples }: ExampleSelectorProps) {
           <SelectValue placeholder="Select an example" />
         </SelectTrigger>
         <SelectContent>
-          {Object.keys(examples).map((key) => (
-            <SelectItem key={key} value={key}>
-              {examples[key].companyName}
-            </SelectItem>
-          ))}
+          {Object.keys(examples).map((key) => {
+            const example = examples[key];
+            const avgCharScore = Object.values(example.characteristics).reduce((sum, char) => sum + char.score, 0) / 6;
+            const avgPorterScore = Object.values(example.porterAnalysis).reduce((sum, force) => sum + force.riskScore, 0) / 5;
+            
+            return (
+              <SelectItem key={key} value={key} className="w-full">
+                <div className="flex items-center w-full gap-6">
+                  <div className="font-medium flex-1 text-left">{example.companyName}</div>
+                  <div className="flex items-center gap-3 text-sm text-muted-foreground shrink-0">
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-xs">B</span>
+                      <div className={`h-2 w-2 rounded-full ${
+                        avgCharScore >= 4 
+                          ? "bg-green-500" 
+                          : avgCharScore >= 2.5
+                          ? "bg-yellow-500"
+                          : "bg-red-500"
+                      }`} />
+                      <span className="font-medium">{avgCharScore.toFixed(1)}</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-xs">I</span>
+                      <div className={`h-2 w-2 rounded-full ${
+                        avgPorterScore >= 4 
+                          ? "bg-green-500" 
+                          : avgPorterScore >= 2.5
+                          ? "bg-yellow-500"
+                          : "bg-red-500"
+                      }`} />
+                      <span className="font-medium">{avgPorterScore.toFixed(1)}</span>
+                    </div>
+                  </div>
+                </div>
+              </SelectItem>
+            );
+          })}
         </SelectContent>
       </Select>
 
