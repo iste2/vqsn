@@ -70,7 +70,6 @@ Analysiere die beschriebenen Risikofaktoren systematisch nach den fünf Kräften
 ```json
 {
   "companyName": "string",
-  "industryContext": "string",
   "porterAnalysis": {
     "supplierPower": {
       "riskScore": "number (1-5)",
@@ -115,7 +114,6 @@ Analysiere die beschriebenen Risikofaktoren systematisch nach den fünf Kräften
   "metadata": {
     "confidenceLevel": "string (high|medium|low)",
     "assumptions": ["string"],
-    "dataLimitations": ["string"],
     "analysisDate": "string (YYYY-MM-DD)",
   }
 }

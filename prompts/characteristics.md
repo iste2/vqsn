@@ -27,8 +27,7 @@ Analysiere das beschriebene Geschäftsmodell systematisch auf folgende Charakter
    - Beispiele: LVMH, Audi, Tiffany
 
 4. Regulierungs- oder ereignisgetriebene Nachfrage
-   - Nachfrage durch externe Faktoren bestimmt
-   - Gesetzliche Vorgaben oder Ereignisse als Treiber
+   - Gesetzliche Vorgaben oder Ereignisse als Treiber der Nachfrage
    - Oft spezialisierte Produkte/Dienstleistungen
    - Beispiele: Rosenbauer, GEICO
 
