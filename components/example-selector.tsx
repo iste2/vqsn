@@ -308,11 +308,7 @@ export function ExampleSelector({ examples }: ExampleSelectorProps) {
                   </li>
                   <li className="flex items-center gap-2 text-gray-600">
                     <span className="inline-block w-2 h-2 rounded-full bg-blue-400" />
-                    Discounted Cash Flow (DCF) Analysis
-                  </li>
-                  <li className="flex items-center gap-2 text-gray-600">
-                    <span className="inline-block w-2 h-2 rounded-full bg-blue-400" />
-                    Momentum Analysis
+                    Valuation Methods
                   </li>
                 </ul>
               </div>
