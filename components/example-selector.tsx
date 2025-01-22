@@ -89,7 +89,7 @@ export function ExampleSelector({ examples }: ExampleSelectorProps) {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="space-y-4">
                   <div className="flex items-center gap-2">
-                    <h3 className="font-medium">Characteristics</h3>
+                    <h3 className="font-medium">Business Model Characteristics</h3>
                     <div className="h-px flex-1 bg-gray-200" />
                   </div>
                   <div className="grid gap-3">
@@ -127,7 +127,7 @@ export function ExampleSelector({ examples }: ExampleSelectorProps) {
 
                 <div className="space-y-4">
                   <div className="flex items-center gap-2">
-                    <h3 className="font-medium">Porter&apos;s Forces</h3>
+                    <h3 className="font-medium">Industry Structure</h3>
                     <div className="h-px flex-1 bg-gray-200" />
                   </div>
                   <div className="grid gap-3">
@@ -168,7 +168,7 @@ export function ExampleSelector({ examples }: ExampleSelectorProps) {
 
           <Card>
             <CardHeader>
-              <CardTitle>Characteristics</CardTitle>
+              <CardTitle>Business Model Characteristics</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               {Object.entries(selectedExample.characteristics).map(([key, char]) => (
@@ -198,7 +198,7 @@ export function ExampleSelector({ examples }: ExampleSelectorProps) {
 
           <Card>
             <CardHeader>
-              <CardTitle>Porter&apos;s Five Forces Analysis</CardTitle>
+              <CardTitle>Industry Structure</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               {Object.entries(selectedExample.porterAnalysis).map(([key, force]) => (
