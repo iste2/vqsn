@@ -3,10 +3,11 @@
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 
+
 export function Hero() {
 
   return (
-    <div className="flex min-h-[80vh] flex-col items-center justify-center space-y-8 px-4 text-center">
+    <div className="flex min-h-[60vh] flex-col items-center justify-center space-y-8 px-4 text-center">
       <div className="space-y-4">
         <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl">
           <span className="block">Invest Smarter with</span>
