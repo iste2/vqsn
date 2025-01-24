@@ -25,7 +25,7 @@ export default function ExamplesPage() {
 
   return (
     <div className="flex justify-center min-h-screen bg-slate-50">
-      <div className="container max-w-4xl px-4 py-8">
+      <div className="container max-w-4xl px-4 py-12">
         <h1 className="text-3xl font-bold mb-8 text-center">Company Analysis Examples</h1>
         <ExampleSelector examples={examples} />
         <Waitlist />

@@ -1,7 +1,7 @@
 export default function ImprintPage() {
   return (
     <div className="flex justify-center">
-      <div className="container max-w-3xl py-12 px-4">
+      <div className="container max-w-4xl py-12 px-4">
         <article className="prose dark:prose-invert max-w-none">
           <h1 className="text-3xl font-bold tracking-tight mb-8">Imprint</h1>
           
