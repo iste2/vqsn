@@ -3,6 +3,8 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { db } from "@/lib/firebase/config"
+import { collection, addDoc, serverTimestamp } from "firebase/firestore"
 
 export function Waitlist() {
   const [email, setEmail] = useState("")
@@ -14,8 +16,11 @@ export function Waitlist() {
     setIsSubmitting(true)
     
     try {
-      // TODO: Implement your waitlist API endpoint
-      await new Promise(resolve => setTimeout(resolve, 1000)) // Simulated API call
+      const waitlistRef = collection(db, "waitlist")
+      await addDoc(waitlistRef, {
+        email:email,
+        timestamp: serverTimestamp(),
+      })
       setStatus("success")
       setEmail("")
     } catch (error: unknown) {
