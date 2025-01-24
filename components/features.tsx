@@ -9,12 +9,12 @@ interface Feature {
 const features: Feature[] = [
   {
     title: "Comprehensive Stock Analysis",
-    description: "Our AI evaluates market position, business models, and performs detailed fundamental analysis including DCF valuation. Get deeper insights into stock quality and true value.",
+    description: "Our AI evaluates market position, business models, and performs detailed fundamental analysis. Get deeper insights into stock quality and true value.",
     icon: BarChart3,
   },
   {
     title: "Smart Portfolio Management",
-    description: "Build and optimize your portfolio using Modern Portfolio Theory. Our system automatically balances your investments for the optimal risk-return ratio.",
+    description: "Build and optimize your portfolio. Our system automatically balances your investments for the optimal risk-return ratio.",
     icon: Wallet,
   },
 ]
