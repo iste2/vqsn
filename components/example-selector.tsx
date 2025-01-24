@@ -5,49 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./ui/collapsible"
 import { ChevronDown } from "lucide-react"
-
-interface Characteristic {
-  score: number
-  reasoning: string
-  examples: string[]
-}
-
-interface PorterForce {
-  riskScore: number
-  keyFactors: string[]
-  threats: string[]
-  mitigations: string[]
-  reasoning: string
-}
-
-interface Example {
-  companyName: string
-  businessModelSummary: string
-  characteristics: {
-    shortLifeCycleBrands: Characteristic
-    essentialProducts: Characteristic
-    premiumProvider: Characteristic
-    regulationDriven: Characteristic
-    highScalability: Characteristic
-    costLeader: Characteristic
-  }
-  porterAnalysis: {
-    supplierPower: PorterForce
-    buyerPower: PorterForce
-    newEntrants: PorterForce
-    substitutes: PorterForce
-    competitiveRivalry: PorterForce
-  }
-  overallAssessment: {
-    primaryRisks: string[]
-    competitiveAdvantages: string[]
-  }
-  metadata: {
-    analysisDate: string
-    confidenceLevel: string
-    assumptions: string[]
-  }
-}
+import Example from "@/app/examples/interfaces"
 
 interface ExampleSelectorProps {
   examples: Record<string, Example>

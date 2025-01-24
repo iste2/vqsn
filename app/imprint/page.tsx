@@ -51,7 +51,7 @@ export default function ImprintPage() {
 
                 <p>
                   Website use is generally possible without providing personal data. Personal data (like name, 
-                  address, email) is collected voluntarily when provided. This data won't be shared with third 
+                  address, email) is collected voluntarily when provided. This data won&apos;t be shared with third 
                   parties without your explicit consent.
                 </p>
 

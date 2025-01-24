@@ -2,6 +2,7 @@ import { ExampleSelector } from "@/components/example-selector"
 import { Waitlist } from "@/components/waitlist"
 import { readFileSync, readdirSync } from "fs"
 import path from "path"
+import Example from "./interfaces"
 
 function getExamples() {
   const examplesDir = path.join(process.cwd(), "examples/results")
@@ -14,7 +15,7 @@ function getExamples() {
     const key = path.basename(file, ".json")
     acc[key] = JSON.parse(content)
     return acc
-  }, {} as Record<string, any>)
+  }, {} as Record<string, Example>)
 
   return examples
 }
