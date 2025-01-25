@@ -1,27 +1,21 @@
 import { ExampleSelector } from "@/components/example-selector"
 import { Waitlist } from "@/components/waitlist"
-import { readFileSync, readdirSync } from "fs"
-import path from "path"
-import Example from "./interfaces"
+import type Example from "./interfaces"
 
-function getExamples() {
-  const examplesDir = path.join(process.cwd(), "examples/results")
-  const files = readdirSync(examplesDir)
+async function getExamples(): Promise<Record<string, Example>> {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/examples`, {
+    next: { revalidate: 3600 } // Cache for 1 hour
+  })
   
-  const examples = files.reduce((acc, file) => {
-    if (!file.endsWith(".json")) return acc
-    
-    const content = readFileSync(path.join(examplesDir, file), "utf-8")
-    const key = path.basename(file, ".json")
-    acc[key] = JSON.parse(content)
-    return acc
-  }, {} as Record<string, Example>)
+  if (!response.ok) {
+    throw new Error('Failed to fetch examples')
+  }
 
-  return examples
+  return response.json()
 }
 
-export default function ExamplesPage() {
-  const examples = getExamples()
+export default async function ExamplesPage() {
+  const examples = await getExamples()
 
   return (
     <div className="flex justify-center min-h-screen bg-slate-50">
