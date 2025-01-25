@@ -13,22 +13,24 @@ const nextConfig: NextConfig = {
         headers: [
           {
             key: 'Access-Control-Allow-Origin',
-            value: process.env.NODE_ENV === 'production' 
-              ? 'https://vqsn.vercel.app' // Removed trailing slash
-              : '*',
+            value: '*', // Allow all origins temporarily for testing
           },
           {
             key: 'Access-Control-Allow-Methods',
-            value: 'GET,OPTIONS,PATCH,DELETE,POST,PUT',
+            value: '*',
           },
           {
             key: 'Access-Control-Allow-Headers',
-            value: '*', // Allow all headers for Firebase
+            value: '*',
           },
           {
             key: 'Access-Control-Allow-Credentials',
             value: 'true',
           },
+          {
+            key: 'Access-Control-Max-Age',
+            value: '86400',
+          }
         ],
       },
     ];
