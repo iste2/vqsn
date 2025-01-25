@@ -3,8 +3,6 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { db } from "@/lib/firebase/config"
-import { collection, addDoc, serverTimestamp } from "firebase/firestore"
 
 export function Waitlist() {
   const [email, setEmail] = useState("")
@@ -16,14 +14,21 @@ export function Waitlist() {
     setIsSubmitting(true)
     
     try {
-      const waitlistRef = collection(db, "waitlist")
-      await addDoc(waitlistRef, {
-        email:email,
-        timestamp: serverTimestamp(),
+      const response = await fetch('/api/waitlist', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
       })
+
+      if (!response.ok) {
+        throw new Error('Failed to join waitlist')
+      }
+
       setStatus("success")
       setEmail("")
-    } catch (error: unknown) {
+    } catch (error) {
       console.error("Error submitting to waitlist:", error)
       setStatus("error") 
     } finally {
