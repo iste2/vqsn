@@ -1,9 +1,15 @@
+import { headers } from 'next/headers'
 import { ExampleSelector } from "@/components/example-selector"
 import { Waitlist } from "@/components/waitlist"
 import type Example from "./interfaces"
 
 async function getExamples(): Promise<Record<string, Example>> {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/examples`, {
+  // Get the host from headers during SSR
+  const headersList = await headers()
+  const host = headersList.get('host') || 'localhost:3000'
+  const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https'
+  
+  const response = await fetch(`${protocol}://${host}/api/examples`, {
     next: { revalidate: 3600 } // Cache for 1 hour
   })
   
