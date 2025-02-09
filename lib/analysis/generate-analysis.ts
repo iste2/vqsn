@@ -9,7 +9,6 @@ import {createLLMClient} from "llm-polyglot";
 import Instructor from "@instructor-ai/instructor";
 import { z } from "zod";
 import {businessModelIntroduction, shortLifeCycleBrands} from "@/lib/analysis/prompts";
-import dotenv from 'dotenv';
 
 export async function generateAnalysisForSingeCompany(company: Company) {
     // get latest 10-K filing
@@ -25,7 +24,6 @@ export async function generateAnalysisForSingeCompany(company: Company) {
     const form10K = parseForm10K(filingText);
     
     // setup llm client
-    dotenv.config();
     const client = createLLMClient({
         provider: 'anthropic',
         apiKey: process.env.ANTHROPIC_API_KEY
