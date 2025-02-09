@@ -45,7 +45,7 @@ export async function getCompanyFilingHistoryByCik(cik: number): Promise<FilingM
     }
     const data = await response.json();
     const filingsData = data['filings']['recent'];
-    filingsData['form'].forEach((_ : any, index: number) => {
+    filingsData['form'].forEach((_ : object, index: number) => {
         result.push({
             accessionNumber: filingsData['accessionNumber'][index],
             filingDate: filingsData['filingDate'][index],
