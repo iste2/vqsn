@@ -1,35 +1,5 @@
 import {getTextBetween} from "@/lib/string-utils";
-
-export interface Company {
-    cik: number;
-    name: string;
-    ticker: string;
-    exchange: string;
-}
-
-export interface FilingMetadata {
-    accessionNumber: string;
-    filingDate: string;
-    reportDate: string;
-    acceptanceDateTime: string;
-    act: string;
-    form: string;
-    fileNumber: string;
-    filmNumber: string;
-    items: string;
-    core_type: string;
-    size: number;
-    isXBRL: boolean;
-    isInlineXBRL: boolean;
-    primaryDocument: string;
-    primaryDocDescription: string;
-    url: string;
-}
-
-export interface Form10K {
-    item1: string;
-    item1a: string;
-}
+import {Company, FilingMetadata, Form10K} from "@/lib/analysis/interfaces";
 
 const header = {
     'User-Agent': 'lnadenau@web.de'
@@ -130,14 +100,3 @@ export function parseForm10K(plainText: string): Form10K {
         item1a: getTextBetween(plainText, 'Item 1A.&#160;&#160;&#160;&#160;Risk Factors', 'Item 1B.&#160;&#160;&#160;&#160;Unresolved Staff Comments')
     };
 }
-
-getCompanyFilingHistoryByTicker('AAPL').then(filings => {
-    const filing = filings?.filter(filing => filing.form === '10-K')[0];
-    console.log(filing);
-    if (filing) {
-        getCompanyFilingText(filing).then(text => {
-            const form10K = parseForm10K(text);
-            console.log(form10K);
-        });
-    }
-});
