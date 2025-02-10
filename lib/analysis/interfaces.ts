@@ -36,16 +36,15 @@ export interface Characteristic {
 }
 
 export interface PorterForce {
-    riskScore: number;
-    keyFactors: string[];
-    threats: string[];
-    mitigations: string[];
+    score: number;
     reasoning: string;
+    examples: string[];
 }
 
 export interface CompanyAnalysis {
     company: Company;
     form10K: Form10K;
+    summary: string;
     characteristics: {
         shortLifeCycleBrands: Characteristic;
         essentialProducts: Characteristic;
@@ -63,7 +62,5 @@ export interface CompanyAnalysis {
     };
     metadata: {
         analysisDate: string;
-        confidenceLevel: string;
-        assumptions: string[];
     };
 }
