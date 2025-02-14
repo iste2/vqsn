@@ -189,12 +189,12 @@ export async function generateAnalysisForSingeCompany(company: Company) : Promis
     };
 }
 
-getCompanyByTicker('AAPL').then(async company => {
-    if(!company) {
-        return;
-    }
-    const result = await generateAnalysisForSingeCompany(company);
-    if(result) {
-        console.log(result);
-    }
-});
+// getCompanyByTicker('AAPL').then(async company => {
+//     if(!company) {
+//         return;
+//     }
+//     const result = await generateAnalysisForSingeCompany(company);
+//     if(result) {
+//         console.log(result);
+//     }
+// });
