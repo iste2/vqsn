@@ -61,71 +61,59 @@ export async function generateAnalysisForSingeCompany(company: Company) : Promis
         }
     });
     
-    // business characteristics schema
+    // business characteristics schema    
+    const characteristicsScoreDescription = 'The score of the characteristic on a scale from 0 to 10.';
+    const characteristicsReasoningDescription = 'The reasoning behind the score.';
+    const characteristicsExamplesDescription = 'Examples from the business model that support the reasoning.';
+    
     const characteristicsSchema = z.object({
-        score: z.number().describe('The score of the characteristic on a scale from 0 to 10.'),
-        reasoning: z.string().describe('The reasoning behind the score.'),
-        examples: z.array(z.string()).describe('Examples from the business model that support the reasoning.')
-    });
-
-    // generate analysis for short life cycle brands
-    const shortLifeCycleBrandsAnalysis = await instructor.chat.completions.create({
-        messages: [{ role: 'user', content: `${ businessModelIntroduction } ${ shortLifeCycleBrands } \n\n ${ form10K.item1 }` }],
-        max_tokens: maxTokens,
-        model: model,
-        response_model: {
-            schema: characteristicsSchema,
-            name: 'characteristics'
-        }
-    });
-    
-    // generate analysis for essential products
-    const essentialProductsAnalysis = await instructor.chat.completions.create({
-        messages: [{ role: 'user', content: `${ businessModelIntroduction } ${ essentialProducts } \n\n ${ form10K.item1 }` }],
-        max_tokens: maxTokens,
-        model: model,
-        response_model: {
-            schema: characteristicsSchema,
-            name: 'characteristics'
-        }
-    });
-    
-    // generate analysis for premium provider
-    const premiumProviderAnalysis = await instructor.chat.completions.create({
-        messages: [{ role: 'user', content: `${ businessModelIntroduction } ${ premiumProvider } \n\n ${ form10K.item1 }` }],
-        max_tokens: maxTokens,
-        model: model,
-        response_model: {
-            schema: characteristicsSchema,
-            name: 'characteristics'
-        }
+        shortLifeCycleBrands: z.object({
+            score: z.number().describe(characteristicsScoreDescription),
+            reasoning: z.string().describe(characteristicsReasoningDescription),
+            examples: z.array(z.string()).describe(characteristicsExamplesDescription)
+        }),
+        essentialProducts: z.object({
+            score: z.number().describe(characteristicsScoreDescription),
+            reasoning: z.string().describe(characteristicsReasoningDescription),
+            examples: z.array(z.string()).describe(characteristicsExamplesDescription)
+        }),
+        premiumProvider: z.object({
+            score: z.number().describe(characteristicsScoreDescription),
+            reasoning: z.string().describe(characteristicsReasoningDescription),
+            examples: z.array(z.string()).describe(characteristicsExamplesDescription)
+        }),
+        regulationDriven: z.object({
+            score: z.number().describe(characteristicsScoreDescription),
+            reasoning: z.string().describe(characteristicsReasoningDescription),
+            examples: z.array(z.string()).describe(characteristicsExamplesDescription)
+        }),
+        highScalability: z.object({
+            score: z.number().describe(characteristicsScoreDescription),
+            reasoning: z.string().describe(characteristicsReasoningDescription),
+            examples: z.array(z.string()).describe(characteristicsExamplesDescription)
+        }),
+        costLeader: z.object({
+            score: z.number().describe(characteristicsScoreDescription),
+            reasoning: z.string().describe(characteristicsReasoningDescription),
+            examples: z.array(z.string()).describe(characteristicsExamplesDescription)
+        })
     });
     
-    // generate analysis for regulation driven
-    const regulationDrivenAnalysis = await instructor.chat.completions.create({
-        messages: [{ role: 'user', content: `${ businessModelIntroduction } ${ regulationDriven } \n\n ${ form10K.item1 }` }],
-        max_tokens: maxTokens,
-        model: model,
-        response_model: {
-            schema: characteristicsSchema,
-            name: 'characteristics'
-        }
-    });
-    
-    // generate analysis for high scalability
-    const highScalabilityAnalysis = await instructor.chat.completions.create({
-        messages: [{ role: 'user', content: `${ businessModelIntroduction } ${ highScalability } \n\n ${ form10K.item1 }` }],
-        max_tokens: maxTokens,
-        model: model,
-        response_model: {
-            schema: characteristicsSchema,
-            name: 'characteristics'
-        }
-    });
-    
-    // generate analysis for cost leader
-    const costLeaderAnalysis = await instructor.chat.completions.create({
-        messages: [{ role: 'user', content: `${ businessModelIntroduction } ${ costLeader } \n\n ${ form10K.item1 }` }],
+    // characteristics analysis
+    const characteristicsAnalysis = await instructor.chat.completions.create({
+        messages: [
+            { 
+                role: 'user', 
+                content: `
+                ${ businessModelIntroduction } 
+                \n ${ shortLifeCycleBrands } 
+                \n ${ essentialProducts } 
+                \n ${ premiumProvider } 
+                \n ${ regulationDriven } 
+                \n ${ highScalability }
+                \n ${ costLeader }
+                \n\n ${ form10K.item1 }`
+            }],
         max_tokens: maxTokens,
         model: model,
         response_model: {
@@ -134,144 +122,79 @@ export async function generateAnalysisForSingeCompany(company: Company) : Promis
         }
     });
 
-    // porters forces schema
+    // porters forces schema    
+    const portersScoreDescription = 'The score of the porter\'s force on a scale from 0 to 10.';
+    const portersReasoningDescription = 'The reasoning behind the score.';
+    const portersExamplesDescription = 'Examples from the risks report that support the reasoning.';
+
     const portersSchema = z.object({
-        score: z.number().describe('The score of the porter\'s force on a scale from 0 to 10.'),
-        reasoning: z.string().describe('The reasoning behind the score.'),
-        examples: z.array(z.string()).describe('Examples from the risks report that support the reasoning.')
+        supplierPower: z.object({
+            score: z.number().describe(portersScoreDescription),
+            reasoning: z.string().describe(portersReasoningDescription),
+            examples: z.array(z.string()).describe(portersExamplesDescription)            
+        }),
+        buyerPower: z.object({
+            score: z.number().describe(portersScoreDescription),
+            reasoning: z.string().describe(portersReasoningDescription),
+            examples: z.array(z.string()).describe(portersExamplesDescription)            
+        }),
+        newEntrants: z.object({
+            score: z.number().describe(portersScoreDescription),
+            reasoning: z.string().describe(portersReasoningDescription),
+            examples: z.array(z.string()).describe(portersExamplesDescription)            
+        }),
+        substitutes: z.object({
+            score: z.number().describe(portersScoreDescription),
+            reasoning: z.string().describe(portersReasoningDescription),
+            examples: z.array(z.string()).describe(portersExamplesDescription)            
+        }),
+        competitiveRivalry: z.object({
+            score: z.number().describe(portersScoreDescription),
+            reasoning: z.string().describe(portersReasoningDescription),
+            examples: z.array(z.string()).describe(portersExamplesDescription)            
+        })
     });
-    
-    // generate analysis for supplier power
-    const supplierPowerAnalysis = await instructor.chat.completions.create({
-        messages: [{ role: 'user', content: `${ porterAnalysisIntroduction } ${ supplierPower } \n\n ${ form10K.item1a }` }],
+
+    // porters schema analysis
+    const porterAnalysis = await instructor.chat.completions.create({
+        messages: [
+            { 
+                role: 'user', 
+                content: `
+                ${ porterAnalysisIntroduction }
+                \n ${ supplierPower }
+                \n ${ buyerPower }
+                \n ${ newEntrants }
+                \n ${ substitutes }
+                \n ${ competitiveRivalry }
+                \n\n ${ form10K.item1 }`
+            }],
         max_tokens: maxTokens,
         model: model,
         response_model: {
             schema: portersSchema,
-            name: 'porters force'
+            name: 'porterAnalysis'
         }
     });
     
-    // generate analysis for buyer power
-    const buyerPowerAnalysis = await instructor.chat.completions.create({
-        messages: [{ role: 'user', content: `${ porterAnalysisIntroduction } ${ buyerPower } \n\n ${ form10K.item1a }` }],
-        max_tokens: maxTokens,
-        model: model,
-        response_model: {
-            schema: portersSchema,
-            name: 'porters force'
-        }
-    });
-    
-    // generate analysis for new entrants
-    const newEntrantsAnalysis = await instructor.chat.completions.create({
-        messages: [{ role: 'user', content: `${ porterAnalysisIntroduction } ${ newEntrants } \n\n ${ form10K.item1a }` }],
-        max_tokens: maxTokens,
-        model: model,
-        response_model: {
-            schema: portersSchema,
-            name: 'porters force'
-        }
-    });
-    
-    // generate analysis for substitutes
-    const substitutesAnalysis = await instructor.chat.completions.create({
-        messages: [{ role: 'user', content: `${ porterAnalysisIntroduction } ${ substitutes } \n\n ${ form10K.item1a }` }],
-        max_tokens: maxTokens,
-        model: model,
-        response_model: {
-            schema: portersSchema,
-            name: 'porters force'
-        }
-    });
-    
-    // generate analysis for competitive rivalry
-    const competitiveRivalryAnalysis = await instructor.chat.completions.create({
-        messages: [{ role: 'user', content: `${ porterAnalysisIntroduction } ${ competitiveRivalry } \n\n ${ form10K.item1a }` }],
-        max_tokens: maxTokens,
-        model: model,
-        response_model: {
-            schema: portersSchema,
-            name: 'porters force'
-        }
-    });
-    
-    // return analysis
     return {
         company: company,
         form10K: form10K,
         summary: businessModelSummaryAnalysis.summary,
-        characteristics: {
-            shortLifeCycleBrands: {
-                score: shortLifeCycleBrandsAnalysis.score,
-                reasoning: shortLifeCycleBrandsAnalysis.reasoning,
-                examples: shortLifeCycleBrandsAnalysis.examples
-            },
-            essentialProducts: {
-                score: essentialProductsAnalysis.score,
-                reasoning: essentialProductsAnalysis.reasoning,
-                examples: essentialProductsAnalysis.examples
-            },
-            premiumProvider: {
-                score: premiumProviderAnalysis.score,
-                reasoning: premiumProviderAnalysis.reasoning,
-                examples: premiumProviderAnalysis.examples
-            },
-            regulationDriven: {
-                score: regulationDrivenAnalysis.score,
-                reasoning: regulationDrivenAnalysis.reasoning,
-                examples: regulationDrivenAnalysis.examples
-            },
-            highScalability: {
-                score: highScalabilityAnalysis.score,
-                reasoning: highScalabilityAnalysis.reasoning,
-                examples: highScalabilityAnalysis.examples
-            },
-            costLeader: {
-                score: costLeaderAnalysis.score,
-                reasoning: costLeaderAnalysis.reasoning,
-                examples: costLeaderAnalysis.examples
-            }
-        },
-        porterAnalysis: {
-            supplierPower: {
-                score: supplierPowerAnalysis.score,
-                reasoning: supplierPowerAnalysis.reasoning,
-                examples: supplierPowerAnalysis.examples
-            },
-            buyerPower: {
-                score: buyerPowerAnalysis.score,
-                reasoning: buyerPowerAnalysis.reasoning,
-                examples: buyerPowerAnalysis.examples
-            },
-            newEntrants: {
-                score: newEntrantsAnalysis.score,
-                reasoning: newEntrantsAnalysis.reasoning,
-                examples: newEntrantsAnalysis.examples
-            },
-            substitutes: {
-                score: substitutesAnalysis.score,
-                reasoning: substitutesAnalysis.reasoning,
-                examples: substitutesAnalysis.examples
-            },
-            competitiveRivalry: {
-                score: competitiveRivalryAnalysis.score,
-                reasoning: competitiveRivalryAnalysis.reasoning,
-                examples: competitiveRivalryAnalysis.examples
-            }
-        },
+        characteristics: characteristicsAnalysis,
+        porterAnalysis: porterAnalysis,
         metadata: {
             analysisDate: new Date().toISOString(),
         }
     };
 }
 
-// getCompanyByTicker('AAPL').then(async company => {
-//     if(!company) {
-//         return;
-//     }
-//     const result = await generateAnalysisForSingeCompany(company);
-//     if(result) {
-//         console.log(result);
-//     }
-// });
+getCompanyByTicker('AAPL').then(async company => {
+    if(!company) {
+        return;
+    }
+    const result = await generateAnalysisForSingeCompany(company);
+    if(result) {
+        console.log(result);
+    }
+});

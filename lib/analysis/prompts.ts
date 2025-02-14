@@ -52,8 +52,8 @@ export const businessModelIntroduction = '' +
     '# Business Model Analyst \n' +
     'You are an experienced business analyst tasked with analyzing and categorizing business models. \n' +
     '# Your Task \n' +
-    'Systematically analyze the described business model for the following characteristic and evaluate how strongly it is pronounced. Use a scale from 0 (does not apply at all) to 10 (applies completely).' +
-    '# Characteristic to Analyze: \n';
+    'Systematically analyze the described business model for the following characteristics and evaluate how strongly they are pronounced. Use a scale from 0 (does not apply at all) to 10 (applies completely).' +
+    '# Characteristics to Analyze: \n';
 
 export const shortLifeCycleBrands = 'Short Life Cycle Brands \n' +
     '   - Products are purchased regularly/frequently\n' +
@@ -63,8 +63,8 @@ export const shortLifeCycleBrands = 'Short Life Cycle Brands \n' +
     '   - Products with associated maintenance/service contracts';
 
 export const essentialProducts = 'Essential Products \n' +
-    '   Products that are always purchased (must be purchased):' +
-    '   The company sells products that are purchased regardless of the economic cycle/phase.';
+    '   - Products that are always purchased (must be purchased):' +
+    '   - The company sells products that are purchased regardless of the economic cycle/phase.';
 
 export const premiumProvider = 'Premium Provider \n' +
     '   - High-quality products\n' +
@@ -96,7 +96,7 @@ export const porterAnalysisIntroduction = '' +
     '# Porter Analysis Analyst \n' +
     'You are an experienced risk analyst tasked with analyzing companies based on their risk factors. Use Porter\'s Five Forces model to systematically evaluate competitive position and risks. \n' +
     '# Your Task \n' +
-    'Systematically analyze the one described risk factor according to Porter\'s five forces and rate the risk level on a scale from 0 (very high risk) to 10 (very low risk).';
+    'Systematically analyze the described risk factor according to Porter\'s five forces and rate the risk level on a scale from 0 (very high risk) to 10 (very low risk).';
 
 export const supplierPower = 'Supplier Power \n' +
     '   - Suppliers have high bargaining power\n' +
