@@ -1,5 +1,5 @@
 import {
-    getCompanyByTicker,
+    // getCompanyByTicker,
     getCompanyFilingHistoryByCik,
     getCompanyFilingText,
     parseForm10K
@@ -34,10 +34,10 @@ export async function generateAnalysisForSingeCompany(company: Company) : Promis
         apiKey: process.env.ANTHROPIC_API_KEY
     });
     
-    const claude35SonnetLatest = "claude-3-5-sonnet-latest";
-    const claude35Haiku20241022 = "claude-3-5-haiku-20241022";
-    const claude3Haiku20240307 = "claude-3-haiku-20240307";
-    const model = claude35SonnetLatest;
+    // const claude35SonnetLatest = "claude-3-5-sonnet-latest";
+    // const claude35Haiku20241022 = "claude-3-5-haiku-20241022";
+    // const claude3Haiku20240307 = "claude-3-haiku-20240307";
+    const model = "claude-3-5-sonnet-latest";
     const maxTokens = 8192;
     
     const instructor = Instructor({
