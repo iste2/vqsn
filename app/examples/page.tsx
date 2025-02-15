@@ -5,7 +5,7 @@ import { CompanyAnalysis } from "@/lib/analysis/interfaces"
 
 async function getAnalyses(): Promise<CompanyAnalysis[]> {
   // Get headers synchronously
-  const headersList = headers()
+  const headersList = await headers()
   // Convert to plain object to access get method
   const host = headersList.get('host') || 'localhost:3000'
   const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https'

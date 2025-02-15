@@ -15,7 +15,7 @@ import {
     shortLifeCycleBrands, substitutes, supplierPower
 } from "@/lib/analysis/prompts";
 
-export async function generateAnalysisForSingeCompany(company: Company) : Promise<CompanyAnalysis | undefined> {
+export async function generateAnalysisForSingleCompany(company: Company) : Promise<CompanyAnalysis | undefined> {
     // get latest 10-K filing
     const allFilings = await getCompanyFilingHistoryByCik(company.cik);
     if (!allFilings) {

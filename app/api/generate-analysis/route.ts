@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import {adminDb} from "@/lib/firebase/admin-config";
 import {getAllCompanies, getCompanyFilingHistoryByCik} from "@/lib/analysis/read-companies";
 import {Company, CompanyAnalysis} from "@/lib/analysis/interfaces";
-import {generateAnalysisForSingeCompany} from "@/lib/analysis/generate-analysis";
+import {generateAnalysisForSingleCompany as generateAnalysisForSingleCompany} from "@/lib/analysis/generate-analysis";
 import {FieldValue} from "firebase-admin/firestore";
 import {firestore} from "firebase-admin";
 import {analysisCollectionName} from "@/lib/firebase/collection-names";
@@ -98,7 +98,7 @@ export async function GET(request: NextRequest) {
                 continue;
             }
 
-            const analysis = await generateAnalysisForSingeCompany(company);
+            const analysis = await generateAnalysisForSingleCompany(company);
             if (analysis) {
                 await saveAnalysisToFirebase(analysis);
                 analyzedCompanies.push(analysis);
