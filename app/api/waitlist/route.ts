@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { FieldValue } from 'firebase-admin/firestore'
 import { adminDb } from '@/lib/firebase/admin-config'
+import {waitlistCollectionName} from "@/lib/firebase/collection-names";
 
 export async function POST(request: Request) {
   try {
@@ -13,7 +14,7 @@ export async function POST(request: Request) {
       )
     }
 
-    const waitlistRef = adminDb.collection('waitlist')
+    const waitlistRef = adminDb.collection(waitlistCollectionName)
     await waitlistRef.add({
       email,
       timestamp: FieldValue.serverTimestamp(),
