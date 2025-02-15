@@ -5,160 +5,111 @@ import {Company, CompanyAnalysis} from "@/lib/analysis/interfaces";
 import {generateAnalysisForSingeCompany} from "@/lib/analysis/generate-analysis";
 import {FieldValue} from "firebase-admin/firestore";
 import {firestore} from "firebase-admin";
-import Timestamp = firestore.Timestamp;
 import {analysisCollectionName} from "@/lib/firebase/collection-names";
 
-export const params = {
+const params = {
     key: "key",
     force: "force",
     numberOfCompanies: "numberOfCompanies"
+} as const;
+
+interface ErrorResponse {
+    error: string;
+    status: number;
+}
+
+function createErrorResponse(message: string, status: number): NextResponse {
+    return NextResponse.json({ error: message, status }, { status });
+}
+
+async function validateApiKey(request: NextRequest): Promise<ErrorResponse | null> {
+    const validApiKey = process.env.GENERATE_ANALYSIS_KEY;
+    
+    if (!validApiKey) {
+        return { error: 'Server configuration error', status: 500 };
+    }
+
+    const key = request.nextUrl.searchParams.get(params.key);
+    if (key !== validApiKey) {
+        return { error: 'Invalid API key', status: 401 };
+    }
+
+    return null;
+}
+
+async function getCompaniesToAnalyze(request: NextRequest): Promise<Company[]> {
+    const numberOfCompanies = request.nextUrl.searchParams.get(params.numberOfCompanies);
+    const companies = await getAllCompanies();
+    
+    return numberOfCompanies 
+        ? companies.slice(0, parseInt(numberOfCompanies))
+        : companies;
+}
+
+async function shouldAnalyzeCompany(company: Company, lastFiling: { filingDate: string } | undefined, force: boolean): Promise<boolean> {
+    if (!lastFiling) return false;
+    if (force) return true;
+
+    const lastFilingTimestamp = firestore.Timestamp.fromDate(new Date(lastFiling.filingDate));
+    const querySnapshot = await adminDb.collection(analysisCollectionName)
+        .where('company.cik', '==', company.cik)
+        .where('timestamp', '>', lastFilingTimestamp)
+        .limit(1)
+        .get();
+
+    return querySnapshot.empty;
+}
+
+async function saveAnalysisToFirebase(analysis: CompanyAnalysis): Promise<void> {
+    const analysisRef = adminDb.collection(analysisCollectionName);
+    await analysisRef.add({
+        company: {
+            name: analysis.company.name,
+            cik: analysis.company.cik,
+            ticker: analysis.company.ticker,
+            exchange: analysis.company.exchange,
+        },
+        form10K: analysis.form10K,
+        summary: analysis.summary,
+        characteristics: analysis.characteristics,
+        porterAnalysis: analysis.porterAnalysis,
+        timestamp: FieldValue.serverTimestamp(),
+    });
 }
 
 export async function GET(request: NextRequest) {
-    //#region authorization
-    const validApiKey = process.env.GENERATE_ANALYSIS_KEY
-    
-    if (!validApiKey) {
-        return NextResponse.json(
-            { error: 'Server configuration error' },
-            { status: 500 }
-        )
+    const apiKeyError = await validateApiKey(request);
+    if (apiKeyError) {
+        return createErrorResponse(apiKeyError.error, apiKeyError.status);
     }
 
-    // Get the key from the URL params
-    const key = request.nextUrl.searchParams.get(params.key);
-
-    // Validate the key
-    if (key !== validApiKey) {
-        return NextResponse.json(
-            { error: 'Invalid API key' },
-            { status: 401 }
-        )
-    }
-    //#endregion
-    
     try {
-        // get all companies
-        const numberOfCompanies = request.nextUrl.searchParams.get(params.numberOfCompanies);
-        let companies: Company[] = [];
-        if(numberOfCompanies) {
-            companies = (await getAllCompanies()).slice(0, parseInt(numberOfCompanies));
-        } else {
-            companies = await getAllCompanies();
-        }
+        const companies = await getCompaniesToAnalyze(request);
         console.log(companies);
+        const force = request.nextUrl.searchParams.get(params.force) === 'true';
+        const analyzedCompanies: CompanyAnalysis[] = [];
 
-        // analyze each company
-        const force = request.nextUrl.searchParams.get(params.key) === 'true';
-        const analyzedCompanies : CompanyAnalysis[] = [];
         for (const company of companies) {
-            const lastFiling = (await getCompanyFilingHistoryByCik(company.cik))?.find(filing => filing.form === '10-K');
-            if (!lastFiling) {
+            const lastFiling = (await getCompanyFilingHistoryByCik(company.cik))
+                ?.find(filing => filing.form === '10-K');
+
+            if (!await shouldAnalyzeCompany(company, lastFiling, force)) {
+                console.log("Skipping analysis for", company.name);
                 continue;
             }
-            if(!force) {
-                const lastFilingTimestamp = Timestamp.fromDate(new Date(lastFiling.filingDate));
-                const querySnapshot = await adminDb.collection(analysisCollectionName)
-                    .where('company.cik', '==', company.cik)
-                    .where('timestamp', '>', lastFilingTimestamp)
-                    .limit(1)
-                    .get();
 
-                if(!querySnapshot.empty) {
-                    console.log("Company analysis already up to date", company);
-                    continue;
-                }
-            }
-            
             const analysis = await generateAnalysisForSingeCompany(company);
             if (analysis) {
+                await saveAnalysisToFirebase(analysis);
                 analyzedCompanies.push(analysis);
             }
         }
 
-        // write to firebase
-        const analysisRef = adminDb.collection(analysisCollectionName);
-        for (const analysis of analyzedCompanies) {
-            await analysisRef.add({
-                company: {
-                    name: analysis.company.name,
-                    cik: analysis.company.cik,
-                    ticker: analysis.company.ticker,
-                    exchange: analysis.company.exchange,
-                },
-                form10K: {
-                    item1: analysis.form10K.item1,
-                    item1a: analysis.form10K.item1a
-                },
-                summary: analysis.summary,
-                characteristics: {
-                    shortLifeCycleBrands: {
-                        score: analysis.characteristics.shortLifeCycleBrands.score,
-                        reasoning: analysis.characteristics.shortLifeCycleBrands.reasoning,
-                        examples: analysis.characteristics.shortLifeCycleBrands.examples
-                    },
-                    essentialProducts: {
-                        score: analysis.characteristics.essentialProducts.score,
-                        reasoning: analysis.characteristics.essentialProducts.reasoning,
-                        examples: analysis.characteristics.essentialProducts.examples
-                    },
-                    premiumProvider: {
-                        score: analysis.characteristics.premiumProvider.score,
-                        reasoning: analysis.characteristics.premiumProvider.reasoning,
-                        examples: analysis.characteristics.premiumProvider.examples
-                    },
-                    regulationDriven: {
-                        score: analysis.characteristics.regulationDriven.score,
-                        reasoning: analysis.characteristics.regulationDriven.reasoning,
-                        examples: analysis.characteristics.regulationDriven.examples
-                    },
-                    highScalability: {
-                        score: analysis.characteristics.highScalability.score,
-                        reasoning: analysis.characteristics.highScalability.reasoning,
-                        examples: analysis.characteristics.highScalability.examples
-                    },
-                    costLeader: {
-                        score: analysis.characteristics.costLeader.score,
-                        reasoning: analysis.characteristics.costLeader.reasoning,
-                        examples: analysis.characteristics.costLeader.examples
-                    }
-                },
-                porterAnalysis: {
-                    supplierPower: {
-                        score: analysis.porterAnalysis.supplierPower.score,
-                        reasoning: analysis.porterAnalysis.supplierPower.reasoning,
-                        examples: analysis.porterAnalysis.supplierPower.examples
-                    },
-                    buyerPower: {
-                        score: analysis.porterAnalysis.buyerPower.score,
-                        reasoning: analysis.porterAnalysis.buyerPower.reasoning,
-                        examples: analysis.porterAnalysis.buyerPower.examples
-                    },
-                    newEntrants: {
-                        score: analysis.porterAnalysis.newEntrants.score,
-                        reasoning: analysis.porterAnalysis.newEntrants.reasoning,
-                        examples: analysis.porterAnalysis.newEntrants.examples
-                    },
-                    substitutes: {
-                        score: analysis.porterAnalysis.substitutes.score,
-                        reasoning: analysis.porterAnalysis.substitutes.reasoning,
-                        examples: analysis.porterAnalysis.substitutes.examples
-                    },
-                    competitiveRivalry: {
-                        score: analysis.porterAnalysis.competitiveRivalry.score,
-                        reasoning: analysis.porterAnalysis.competitiveRivalry.reasoning,
-                        examples: analysis.porterAnalysis.competitiveRivalry.examples
-                    }
-                },
-                timestamp: FieldValue.serverTimestamp(),
-            });
-        }
-        
         return NextResponse.json(analyzedCompanies.map(company => company.company));
-    } catch (error: Error | any) {
-        return NextResponse.json(
-            { error: error.message },
-            { status: 500 }
-        )
+    } catch (error) {
+        return createErrorResponse(
+            error instanceof Error ? error.message : 'An unexpected error occurred',
+            500
+        );
     }
 }
