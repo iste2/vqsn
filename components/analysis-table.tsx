@@ -115,7 +115,7 @@ function ScoreFilterInput({
           className="w-20 h-8"
           min={0}
           max={10}
-          step={0.1}
+          step={1}
         />
         <Input
           type="number"
@@ -128,7 +128,7 @@ function ScoreFilterInput({
           className="w-20 h-8"
           min={0}
           max={10}
-          step={0.1}
+          step={1}
         />
       </div>
     </div>
