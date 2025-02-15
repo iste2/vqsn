@@ -1,9 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server'
 import {adminDb} from "@/lib/firebase/admin-config";
-import {getAllCompanies} from "@/lib/analysis/read-companies";
-import {CompanyAnalysis} from "@/lib/analysis/interfaces";
+import {getAllCompanies, getCompanyFilingHistoryByCik} from "@/lib/analysis/read-companies";
+import {Company, CompanyAnalysis} from "@/lib/analysis/interfaces";
 import {generateAnalysisForSingeCompany} from "@/lib/analysis/generate-analysis";
 import {FieldValue} from "firebase-admin/firestore";
+import {firestore} from "firebase-admin";
+import Timestamp = firestore.Timestamp;
+import {analysisCollectionName} from "@/lib/firebase/collection-names";
+
+export const params = {
+    key: "key",
+    force: "force",
+    numberOfCompanies: "numberOfCompanies"
+}
 
 export async function GET(request: NextRequest) {
     //#region authorization
@@ -17,7 +26,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Get the key from the URL params
-    const key = request.nextUrl.searchParams.get('key');
+    const key = request.nextUrl.searchParams.get(params.key);
 
     // Validate the key
     if (key !== validApiKey) {
@@ -29,14 +38,38 @@ export async function GET(request: NextRequest) {
     //#endregion
     
     try {
-        
         // get all companies
-        const companies = (await getAllCompanies()).slice(0, 1);
+        const numberOfCompanies = request.nextUrl.searchParams.get(params.numberOfCompanies);
+        let companies: Company[] = [];
+        if(numberOfCompanies) {
+            companies = (await getAllCompanies()).slice(0, parseInt(numberOfCompanies));
+        } else {
+            companies = await getAllCompanies();
+        }
         console.log(companies);
 
         // analyze each company
+        const force = request.nextUrl.searchParams.get(params.key) === 'true';
         const analyzedCompanies : CompanyAnalysis[] = [];
         for (const company of companies) {
+            const lastFiling = (await getCompanyFilingHistoryByCik(company.cik))?.find(filing => filing.form === '10-K');
+            if (!lastFiling) {
+                continue;
+            }
+            if(!force) {
+                const lastFilingTimestamp = Timestamp.fromDate(new Date(lastFiling.filingDate));
+                const querySnapshot = await adminDb.collection(analysisCollectionName)
+                    .where('company.cik', '==', company.cik)
+                    .where('timestamp', '>', lastFilingTimestamp)
+                    .limit(1)
+                    .get();
+
+                if(!querySnapshot.empty) {
+                    console.log("Company analysis already up to date", company);
+                    continue;
+                }
+            }
+            
             const analysis = await generateAnalysisForSingeCompany(company);
             if (analysis) {
                 analyzedCompanies.push(analysis);
@@ -44,8 +77,7 @@ export async function GET(request: NextRequest) {
         }
 
         // write to firebase
-        const analysisRef = adminDb.collection('analysis');
-        console.log('Collection found')
+        const analysisRef = adminDb.collection(analysisCollectionName);
         for (const analysis of analyzedCompanies) {
             await analysisRef.add({
                 company: {
@@ -122,11 +154,10 @@ export async function GET(request: NextRequest) {
             });
         }
         
-        return NextResponse.json(companies)
-    } catch (error) {
-        console.log('Analysis error:', error);
+        return NextResponse.json(analyzedCompanies.map(company => company.company));
+    } catch (error: Error | any) {
         return NextResponse.json(
-            { error: 'Internal server error' },
+            { error: error.message },
             { status: 500 }
         )
     }
