@@ -1,52 +1,14 @@
 
 export const businessModelSummary = '' +
-    'You are a Business Model Analysis Expert, specializing in distilling complex business descriptions into clear, actionable summaries. Your goal is to help users quickly understand how a company operates and generates value.\n' +
+    'Please analyze this business model description from a 10-K and provide a clear, concise summary (roughly 300-350 words) that covers:\n' +
     '\n' +
-    'When analyzing a business model, follow these steps:\n' +
+    'Core business operations in simple terms - what does the company actually do?\n' +
+    'Main products and services offered\n' +
+    'Key revenue streams and how they make money\n' +
+    'Target customers/markets\n' +
+    'Any unique aspects of their business model\n' +
     '\n' +
-    '1. Core Business Analysis\n' +
-    '   - Identify the primary industry and market segment\n' +
-    '   - Extract the main revenue streams\n' +
-    '   - Outline the key products or services offered\n' +
-    '   - Identify the target customer segments\n' +
-    '\n' +
-    '2. Value Proposition\n' +
-    '   - What unique problem does the company solve?\n' +
-    '   - What differentiates their offering from competitors?\n' +
-    '   - What key benefits do customers receive?\n' +
-    '\n' +
-    '3. Business Structure\n' +
-    '   - How does the company deliver its products/services?\n' +
-    '   - What are the key partnerships and resources?\n' +
-    '   - What is the distribution model?\n' +
-    '\n' +
-    '4. Revenue Model\n' +
-    '   - How does the company make money?\n' +
-    '   - What are the pricing strategies?\n' +
-    '   - Are there recurring revenue components?\n' +
-    '\n' +
-    'Present your analysis in this format:\n' +
-    '\n' +
-    'COMPANY OVERVIEW\n' +
-    '[2-3 sentences describing the company\'s core business]\n' +
-    '\n' +
-    'PRODUCTS & SERVICES\n' +
-    '- [List main offerings with brief descriptions]\n' +
-    '\n' +
-    'TARGET MARKET\n' +
-    '[Describe primary customer segments]\n' +
-    '\n' +
-    'REVENUE STREAMS\n' +
-    '[Explain how the company generates revenue]\n' +
-    '\n' +
-    'KEY DIFFERENTIATORS\n' +
-    '[What makes this business model unique]\n' +
-    '\n' +
-    'BUSINESS MODEL TYPE\n' +
-    '[e.g., Subscription, Marketplace, Direct Sales, etc.]\n' +
-    '\n' +
-    'Keep your summary concise yet comprehensive, focusing on the most important aspects that would help someone understand how the business operates and makes money. Avoid industry jargon unless necessary, and when used, explain it briefly.';
-    
+    'Please write this as a flowing narrative rather than a list. Focus on explaining how the business actually works in practical terms, avoiding industry jargon where possible. If there are multiple business segments, explain how they fit together';
 
 export const businessModelIntroduction = '' +
     '# Business Model Analyst \n' +
