@@ -27,6 +27,10 @@ export async function generateAnalysisForSingleCompany(company: Company) : Promi
     }
     const filingText = await getCompanyFilingText(latest10K);
     const form10K = parseForm10K(filingText);
+    if(form10K.item1 == "" || form10K.item1a == "") {
+        console.log("Could not parse 10-K", company, latest10K);
+        return;
+    }
     
     // setup llm client
     const client = createLLMClient({
