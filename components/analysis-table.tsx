@@ -26,6 +26,7 @@ import {
 } from "@/components/ui/accordion"
 import { Badge } from "@/components/ui/badge"
 import { FilterIcon } from "lucide-react"
+import { AnalysisDetailsDialog } from "@/components/analysis-details-dialog"
 
 interface ScoreFilter {
   min: number | null
@@ -415,6 +416,10 @@ export function AnalysisTable({ analyses }: AnalysisTableProps) {
           </TableBody>
         </Table>
       </div>
+      <AnalysisDetailsDialog 
+        analysis={selectedAnalysis} 
+        onClose={() => setSelectedAnalysis(null)} 
+      />
     </div>
   )
 } 
