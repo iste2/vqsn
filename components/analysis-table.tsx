@@ -25,6 +25,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import { Badge } from "@/components/ui/badge"
+import { FilterIcon } from "lucide-react"
 
 interface ScoreFilter {
   min: number | null
@@ -197,110 +198,117 @@ export function AnalysisTable({ analyses }: AnalysisTableProps) {
 
   return (
     <div className="space-y-4">
-      <div className="space-y-2">
-        <Input
-          placeholder="Search by company name or ticker..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="max-w-sm"
-        />
-        <Accordion type="single" collapsible defaultValue={hasActiveFilters ? "filters" : undefined}>
-          <AccordionItem value="filters">
-            <AccordionTrigger className="group">
-              <div className="flex items-center gap-2">
-                Filters
-                {activeFilterCount > 0 && (
-                  <Badge 
-                    variant="secondary" 
-                    className="group-hover:bg-secondary/80"
-                  >
-                    {activeFilterCount} active
-                  </Badge>
-                )}
-              </div>
-            </AccordionTrigger>
-            <AccordionContent>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 p-4">
-                <ScoreFilterInput
-                  title="Short Life Brands"
-                  tooltip="Products with short life cycles and frequent brand changes"
-                  filter={scoreFilters.shortLifeCycleBrands}
-                  onChange={(filter) => setScoreFilters(prev => ({ ...prev, shortLifeCycleBrands: filter }))}
-                />
-                <ScoreFilterInput
-                  title="Essential"
-                  tooltip="Essential products and services"
-                  filter={scoreFilters.essentialProducts}
-                  onChange={(filter) => setScoreFilters(prev => ({ ...prev, essentialProducts: filter }))}
-                />
-                <ScoreFilterInput
-                  title="Premium"
-                  tooltip="Premium provider in the market"
-                  filter={scoreFilters.premiumProvider}
-                  onChange={(filter) => setScoreFilters(prev => ({ ...prev, premiumProvider: filter }))}
-                />
-                <ScoreFilterInput
-                  title="Regulation"
-                  tooltip="Business driven by regulation"
-                  filter={scoreFilters.regulationDriven}
-                  onChange={(filter) => setScoreFilters(prev => ({ ...prev, regulationDriven: filter }))}
-                />
-                <ScoreFilterInput
-                  title="Scalability"
-                  tooltip="High scalability potential"
-                  filter={scoreFilters.highScalability}
-                  onChange={(filter) => setScoreFilters(prev => ({ ...prev, highScalability: filter }))}
-                />
-                <ScoreFilterInput
-                  title="Cost Lead"
-                  tooltip="Cost leadership position"
-                  filter={scoreFilters.costLeader}
-                  onChange={(filter) => setScoreFilters(prev => ({ ...prev, costLeader: filter }))}
-                />
-                <ScoreFilterInput
-                  title="Suppliers"
-                  tooltip="Supplier bargaining power"
-                  filter={scoreFilters.supplierPower}
-                  onChange={(filter) => setScoreFilters(prev => ({ ...prev, supplierPower: filter }))}
-                />
-                <ScoreFilterInput
-                  title="Buyers"
-                  tooltip="Buyer bargaining power"
-                  filter={scoreFilters.buyerPower}
-                  onChange={(filter) => setScoreFilters(prev => ({ ...prev, buyerPower: filter }))}
-                />
-                <ScoreFilterInput
-                  title="Entrants"
-                  tooltip="Threat of new entrants"
-                  filter={scoreFilters.newEntrants}
-                  onChange={(filter) => setScoreFilters(prev => ({ ...prev, newEntrants: filter }))}
-                />
-                <ScoreFilterInput
-                  title="Substitutes"
-                  tooltip="Threat of substitute products"
-                  filter={scoreFilters.substitutes}
-                  onChange={(filter) => setScoreFilters(prev => ({ ...prev, substitutes: filter }))}
-                />
-                <ScoreFilterInput
-                  title="Rivalry"
-                  tooltip="Competitive rivalry in the industry"
-                  filter={scoreFilters.competitiveRivalry}
-                  onChange={(filter) => setScoreFilters(prev => ({ ...prev, competitiveRivalry: filter }))}
-                />
-              </div>
-              <div className="flex justify-end px-4 pt-2">
-                <Button
-                  variant="outline"
-                  onClick={() => setScoreFilters(initialScoreFilters)}
-                  className="text-sm"
-                >
-                  Reset Filters
-                </Button>
-              </div>
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
+      <div className="flex gap-2 items-center">
+        <div className="flex-1 max-w-sm">
+          <Input
+            placeholder="Search by company name or ticker..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={() => document.getElementById("filters-accordion")?.click()}
+          className="relative w-10"
+        >
+          <FilterIcon className="h-4 w-4" />
+          {activeFilterCount > 0 && (
+            <Badge 
+              variant="secondary" 
+              className="absolute -top-2 -right-2 h-5 w-5 p-0 flex items-center justify-center"
+            >
+              {activeFilterCount}
+            </Badge>
+          )}
+        </Button>
       </div>
+      <Accordion type="single" collapsible defaultValue={hasActiveFilters ? "filters" : undefined}>
+        <AccordionItem value="filters">
+          <AccordionTrigger id="filters-accordion" className="sr-only">
+            Filters
+          </AccordionTrigger>
+          <AccordionContent>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 p-4">
+              <ScoreFilterInput
+                title="Short Life Brands"
+                tooltip="Products with short life cycles and frequent brand changes"
+                filter={scoreFilters.shortLifeCycleBrands}
+                onChange={(filter) => setScoreFilters(prev => ({ ...prev, shortLifeCycleBrands: filter }))}
+              />
+              <ScoreFilterInput
+                title="Essential"
+                tooltip="Essential products and services"
+                filter={scoreFilters.essentialProducts}
+                onChange={(filter) => setScoreFilters(prev => ({ ...prev, essentialProducts: filter }))}
+              />
+              <ScoreFilterInput
+                title="Premium"
+                tooltip="Premium provider in the market"
+                filter={scoreFilters.premiumProvider}
+                onChange={(filter) => setScoreFilters(prev => ({ ...prev, premiumProvider: filter }))}
+              />
+              <ScoreFilterInput
+                title="Regulation"
+                tooltip="Business driven by regulation"
+                filter={scoreFilters.regulationDriven}
+                onChange={(filter) => setScoreFilters(prev => ({ ...prev, regulationDriven: filter }))}
+              />
+              <ScoreFilterInput
+                title="Scalability"
+                tooltip="High scalability potential"
+                filter={scoreFilters.highScalability}
+                onChange={(filter) => setScoreFilters(prev => ({ ...prev, highScalability: filter }))}
+              />
+              <ScoreFilterInput
+                title="Cost Lead"
+                tooltip="Cost leadership position"
+                filter={scoreFilters.costLeader}
+                onChange={(filter) => setScoreFilters(prev => ({ ...prev, costLeader: filter }))}
+              />
+              <ScoreFilterInput
+                title="Suppliers"
+                tooltip="Supplier bargaining power"
+                filter={scoreFilters.supplierPower}
+                onChange={(filter) => setScoreFilters(prev => ({ ...prev, supplierPower: filter }))}
+              />
+              <ScoreFilterInput
+                title="Buyers"
+                tooltip="Buyer bargaining power"
+                filter={scoreFilters.buyerPower}
+                onChange={(filter) => setScoreFilters(prev => ({ ...prev, buyerPower: filter }))}
+              />
+              <ScoreFilterInput
+                title="Entrants"
+                tooltip="Threat of new entrants"
+                filter={scoreFilters.newEntrants}
+                onChange={(filter) => setScoreFilters(prev => ({ ...prev, newEntrants: filter }))}
+              />
+              <ScoreFilterInput
+                title="Substitutes"
+                tooltip="Threat of substitute products"
+                filter={scoreFilters.substitutes}
+                onChange={(filter) => setScoreFilters(prev => ({ ...prev, substitutes: filter }))}
+              />
+              <ScoreFilterInput
+                title="Rivalry"
+                tooltip="Competitive rivalry in the industry"
+                filter={scoreFilters.competitiveRivalry}
+                onChange={(filter) => setScoreFilters(prev => ({ ...prev, competitiveRivalry: filter }))}
+              />
+            </div>
+            <div className="flex justify-end px-4 pt-2">
+              <Button
+                variant="outline"
+                onClick={() => setScoreFilters(initialScoreFilters)}
+                className="text-sm"
+              >
+                Reset Filters
+              </Button>
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
       <div className="rounded-md border overflow-x-auto">
         <Table>
           <TableHeader>
