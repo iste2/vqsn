@@ -11,6 +11,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 import {
   Tooltip,
   TooltipContent,
@@ -55,9 +56,26 @@ function TableHeadWithTooltip({ title, tooltip }: { title: string, tooltip: stri
 
 export function AnalysisTable({ analyses }: AnalysisTableProps) {
   const [selectedAnalysis, setSelectedAnalysis] = useState<CompanyAnalysis | null>(null)
+  const [searchQuery, setSearchQuery] = useState("")
+
+  const filteredAnalyses = analyses.filter((analysis) => {
+    const searchLower = searchQuery.toLowerCase()
+    return (
+      analysis.company.name.toLowerCase().includes(searchLower) ||
+      analysis.company.ticker.toLowerCase().includes(searchLower)
+    )
+  })
 
   return (
-    <>
+    <div className="space-y-4">
+      <div className="flex items-center">
+        <Input
+          placeholder="Search by company name or ticker..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="max-w-sm"
+        />
+      </div>
       <div className="rounded-md border overflow-x-auto">
         <Table>
           <TableHeader>
@@ -112,7 +130,7 @@ export function AnalysisTable({ analyses }: AnalysisTableProps) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {analyses.map((analysis) => (
+            {filteredAnalyses.map((analysis) => (
               <TableRow key={analysis.company.ticker}>
                 <TableCell className="font-medium whitespace-nowrap">
                   {analysis.company.ticker}
@@ -164,6 +182,6 @@ export function AnalysisTable({ analyses }: AnalysisTableProps) {
           </TableBody>
         </Table>
       </div>
-    </>
+    </div>
   )
 } 
