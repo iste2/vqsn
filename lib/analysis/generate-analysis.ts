@@ -183,9 +183,6 @@ export async function generateAnalysisForSingeCompany(company: Company) : Promis
         summary: businessModelSummaryAnalysis.summary,
         characteristics: characteristicsAnalysis,
         porterAnalysis: porterAnalysis,
-        metadata: {
-            analysisDate: new Date().toISOString(),
-        }
     };
 }
 
