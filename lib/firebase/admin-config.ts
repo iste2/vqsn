@@ -10,4 +10,5 @@ const firebaseAdminConfig = {
 }
 
 const app = getApps().length === 0 ? initializeApp(firebaseAdminConfig) : getApps()[0]
-export const adminDb = getFirestore(app) 
+export const adminDb = getFirestore(app)
+adminDb.settings({ ignoreUndefinedProperties: true }) 
