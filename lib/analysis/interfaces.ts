@@ -60,7 +60,4 @@ export interface CompanyAnalysis {
         substitutes: PorterForce;
         competitiveRivalry: PorterForce;
     };
-    metadata: {
-        analysisDate: string;
-    };
 }
