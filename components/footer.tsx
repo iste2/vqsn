@@ -12,7 +12,7 @@ export function Footer() {
       <div className="w-[1200px] flex h-14 items-center justify-between">
         <div className="flex items-center gap-4">
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} VQSN. All rights reserved.
+            © {new Date().getFullYear()} TrueStockInsight. All rights reserved.
           </p>
           <Link 
             href="/imprint"

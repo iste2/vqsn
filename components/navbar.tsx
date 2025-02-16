@@ -16,7 +16,7 @@ export function Navbar() {
       <div className="flex h-16 items-center px-4 container mx-auto justify-between">
       <Link href="/" className="flex items-center gap-2">
           <span className="text-xl font-semibold tracking-tight">
-            VQSN
+            TrueStockInsight
           </span>
         </Link>
         <div className="flex items-center gap-6">
