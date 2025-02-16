@@ -11,11 +11,11 @@ async function getAnalyses(): Promise<CompanyAnalysis[]> {
   const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https'
   
   const response = await fetch(`${protocol}://${host}/api/analysis`, {
-    next: { revalidate: 3600 } // Cache for 1 hour
+    next: { revalidate: 1 } // Cache for 1 hour
   })
   
   if (!response.ok) {
-    throw new Error('Failed to fetch analyses')
+    console.error("Failed to fetch analysis.", response)
   }
 
   return response.json()
