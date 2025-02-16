@@ -119,19 +119,6 @@ function ScoreFilterInput({
           max={10}
           step={1}
         />
-        <Input
-          type="number"
-          placeholder="Max"
-          value={filter.max ?? ""}
-          onChange={(e) => onChange({ 
-            ...filter, 
-            max: e.target.value ? Number(e.target.value) : null 
-          })}
-          className="w-20 h-8"
-          min={0}
-          max={10}
-          step={1}
-        />
       </div>
     </div>
   )
@@ -165,27 +152,16 @@ export function AnalysisTable({ analyses }: AnalysisTableProps) {
 
     const matchesScoreFilters = 
       (!scoreFilters.shortLifeCycleBrands.min || analysis.characteristics.shortLifeCycleBrands.score >= scoreFilters.shortLifeCycleBrands.min) &&
-      (!scoreFilters.shortLifeCycleBrands.max || analysis.characteristics.shortLifeCycleBrands.score <= scoreFilters.shortLifeCycleBrands.max) &&
       (!scoreFilters.essentialProducts.min || analysis.characteristics.essentialProducts.score >= scoreFilters.essentialProducts.min) &&
-      (!scoreFilters.essentialProducts.max || analysis.characteristics.essentialProducts.score <= scoreFilters.essentialProducts.max) &&
       (!scoreFilters.premiumProvider.min || analysis.characteristics.premiumProvider.score >= scoreFilters.premiumProvider.min) &&
-      (!scoreFilters.premiumProvider.max || analysis.characteristics.premiumProvider.score <= scoreFilters.premiumProvider.max) &&
       (!scoreFilters.regulationDriven.min || analysis.characteristics.regulationDriven.score >= scoreFilters.regulationDriven.min) &&
-      (!scoreFilters.regulationDriven.max || analysis.characteristics.regulationDriven.score <= scoreFilters.regulationDriven.max) &&
       (!scoreFilters.highScalability.min || analysis.characteristics.highScalability.score >= scoreFilters.highScalability.min) &&
-      (!scoreFilters.highScalability.max || analysis.characteristics.highScalability.score <= scoreFilters.highScalability.max) &&
       (!scoreFilters.costLeader.min || analysis.characteristics.costLeader.score >= scoreFilters.costLeader.min) &&
-      (!scoreFilters.costLeader.max || analysis.characteristics.costLeader.score <= scoreFilters.costLeader.max) &&
       (!scoreFilters.supplierPower.min || analysis.porterAnalysis.supplierPower.score >= scoreFilters.supplierPower.min) &&
-      (!scoreFilters.supplierPower.max || analysis.porterAnalysis.supplierPower.score <= scoreFilters.supplierPower.max) &&
       (!scoreFilters.buyerPower.min || analysis.porterAnalysis.buyerPower.score >= scoreFilters.buyerPower.min) &&
-      (!scoreFilters.buyerPower.max || analysis.porterAnalysis.buyerPower.score <= scoreFilters.buyerPower.max) &&
       (!scoreFilters.newEntrants.min || analysis.porterAnalysis.newEntrants.score >= scoreFilters.newEntrants.min) &&
-      (!scoreFilters.newEntrants.max || analysis.porterAnalysis.newEntrants.score <= scoreFilters.newEntrants.max) &&
       (!scoreFilters.substitutes.min || analysis.porterAnalysis.substitutes.score >= scoreFilters.substitutes.min) &&
-      (!scoreFilters.substitutes.max || analysis.porterAnalysis.substitutes.score <= scoreFilters.substitutes.max) &&
-      (!scoreFilters.competitiveRivalry.min || analysis.porterAnalysis.competitiveRivalry.score >= scoreFilters.competitiveRivalry.min) &&
-      (!scoreFilters.competitiveRivalry.max || analysis.porterAnalysis.competitiveRivalry.score <= scoreFilters.competitiveRivalry.max)
+      (!scoreFilters.competitiveRivalry.min || analysis.porterAnalysis.competitiveRivalry.score >= scoreFilters.competitiveRivalry.min)
 
     return matchesSearch && matchesScoreFilters
   })
@@ -247,68 +223,68 @@ export function AnalysisTable({ analyses }: AnalysisTableProps) {
           <AccordionContent>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 p-4">
               <ScoreFilterInput
-                title="Short Life Brands"
-                tooltip="Products with short life cycles and frequent brand changes"
+                title="Short Life Brands (Min)"
+                tooltip="Minimum score for products with short life cycles and frequent brand changes"
                 filter={scoreFilters.shortLifeCycleBrands}
                 onChange={(filter) => setScoreFilters(prev => ({ ...prev, shortLifeCycleBrands: filter }))}
               />
               <ScoreFilterInput
-                title="Essential"
-                tooltip="Essential products and services"
+                title="Essential (Min)"
+                tooltip="Minimum score for essential products and services"
                 filter={scoreFilters.essentialProducts}
                 onChange={(filter) => setScoreFilters(prev => ({ ...prev, essentialProducts: filter }))}
               />
               <ScoreFilterInput
-                title="Premium"
-                tooltip="Premium provider in the market"
+                title="Premium (Min)"
+                tooltip="Minimum score for premium providers in the market"
                 filter={scoreFilters.premiumProvider}
                 onChange={(filter) => setScoreFilters(prev => ({ ...prev, premiumProvider: filter }))}
               />
               <ScoreFilterInput
-                title="Regulation"
-                tooltip="Business driven by regulation"
+                title="Regulation (Min)"
+                tooltip="Minimum score for businesses driven by regulation"
                 filter={scoreFilters.regulationDriven}
                 onChange={(filter) => setScoreFilters(prev => ({ ...prev, regulationDriven: filter }))}
               />
               <ScoreFilterInput
-                title="Scalability"
-                tooltip="High scalability potential"
+                title="Scalability (Min)"
+                tooltip="Minimum score for high scalability potential"
                 filter={scoreFilters.highScalability}
                 onChange={(filter) => setScoreFilters(prev => ({ ...prev, highScalability: filter }))}
               />
               <ScoreFilterInput
-                title="Cost Lead"
-                tooltip="Cost leadership position"
+                title="Cost Lead (Min)"
+                tooltip="Minimum score for cost leadership position"
                 filter={scoreFilters.costLeader}
                 onChange={(filter) => setScoreFilters(prev => ({ ...prev, costLeader: filter }))}
               />
               <ScoreFilterInput
-                title="Suppliers"
-                tooltip="Supplier bargaining power"
+                title="Suppliers (Min)"
+                tooltip="Minimum score for supplier bargaining power"
                 filter={scoreFilters.supplierPower}
                 onChange={(filter) => setScoreFilters(prev => ({ ...prev, supplierPower: filter }))}
               />
               <ScoreFilterInput
-                title="Buyers"
-                tooltip="Buyer bargaining power"
+                title="Buyers (Min)"
+                tooltip="Minimum score for buyer bargaining power"
                 filter={scoreFilters.buyerPower}
                 onChange={(filter) => setScoreFilters(prev => ({ ...prev, buyerPower: filter }))}
               />
               <ScoreFilterInput
-                title="Entrants"
-                tooltip="Threat of new entrants"
+                title="Entrants (Min)"
+                tooltip="Minimum score for the threat of new entrants"
                 filter={scoreFilters.newEntrants}
                 onChange={(filter) => setScoreFilters(prev => ({ ...prev, newEntrants: filter }))}
               />
               <ScoreFilterInput
-                title="Substitutes"
-                tooltip="Threat of substitute products"
+                title="Substitutes (Min)"
+                tooltip="Minimum score for the threat of substitute products"
                 filter={scoreFilters.substitutes}
                 onChange={(filter) => setScoreFilters(prev => ({ ...prev, substitutes: filter }))}
               />
               <ScoreFilterInput
-                title="Rivalry"
-                tooltip="Competitive rivalry in the industry"
+                title="Rivalry (Min)"
+                tooltip="Minimum score for competitive rivalry in the industry"
                 filter={scoreFilters.competitiveRivalry}
                 onChange={(filter) => setScoreFilters(prev => ({ ...prev, competitiveRivalry: filter }))}
               />
