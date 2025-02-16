@@ -31,6 +31,12 @@ export function Navbar() {
           >
             View Examples
           </Link>
+          <Link
+              href="/scoring"
+              className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+          >
+            Scoring Guide
+          </Link>
           <Button 
             variant="default" 
             size="default"
