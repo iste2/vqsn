@@ -51,7 +51,7 @@ export async function generateAnalysisForSingleCompany(company: Company) : Promi
     
     // business model schema
     const summarySchema = z.object({
-        summary: z.string().describe('The summary of the business model.')
+        summary: z.string().describe('The summary of the business model as html formatted string.')
     });
     
     // generate business model summary  
@@ -194,7 +194,7 @@ export async function generateAnalysisForSingleCompany(company: Company) : Promi
 //     if(!company) {
 //         return;
 //     }
-//     const result = await generateAnalysisForSingeCompany(company);
+//     const result = await generateAnalysisForSingleCompany(company);
 //     if(result) {
 //         console.log(result);
 //     }

@@ -50,7 +50,16 @@ export function AnalysisDetailsDialog({ analysis, onClose }: AnalysisDetailsDial
                 <CardTitle>Business Model Summary</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-muted-foreground">{analysis.summary}</p>
+                <div 
+                  className="prose prose-sm dark:prose-invert prose-slate max-w-none
+                    [&>h1]:text-base [&>h1]:font-semibold [&>h1]:mt-0
+                    [&>h2]:text-sm [&>h2]:font-semibold
+                    [&>h3]:text-sm [&>h3]:font-medium
+                    [&>p]:text-sm [&>p]:text-muted-foreground
+                    [&>ul]:text-sm [&>ul]:text-muted-foreground
+                    [&>ol]:text-sm [&>ol]:text-muted-foreground"
+                  dangerouslySetInnerHTML={{ __html: analysis.summary }}
+                />
               </CardContent>
             </Card>
             
