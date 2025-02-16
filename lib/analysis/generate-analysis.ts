@@ -15,7 +15,7 @@ import {
     shortLifeCycleBrands, substitutes, supplierPower
 } from "@/lib/analysis/prompts";
 
-export async function generateAnalysisForSingeCompany(company: Company) : Promise<CompanyAnalysis | undefined> {
+export async function generateAnalysisForSingleCompany(company: Company) : Promise<CompanyAnalysis | undefined> {
     // get latest 10-K filing
     const allFilings = await getCompanyFilingHistoryByCik(company.cik);
     if (!allFilings) {
@@ -27,6 +27,10 @@ export async function generateAnalysisForSingeCompany(company: Company) : Promis
     }
     const filingText = await getCompanyFilingText(latest10K);
     const form10K = parseForm10K(filingText);
+    if(form10K.item1 == "" || form10K.item1a == "") {
+        console.log("Could not parse 10-K", company, latest10K);
+        return;
+    }
     
     // setup llm client
     const client = createLLMClient({

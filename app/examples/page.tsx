@@ -1,33 +1,35 @@
 import { headers } from 'next/headers'
-import { ExampleSelector } from "@/components/example-selector"
+import { AnalysisTable } from "@/components/analysis-table"
 import { Waitlist } from "@/components/waitlist"
-import type Example from "./interfaces"
+import { CompanyAnalysis } from "@/lib/analysis/interfaces"
 
-async function getExamples(): Promise<Record<string, Example>> {
-  // Get the host from headers during SSR
+async function getAnalyses(): Promise<CompanyAnalysis[]> {
+  // Get headers synchronously
   const headersList = await headers()
+  // Convert to plain object to access get method
   const host = headersList.get('host') || 'localhost:3000'
   const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https'
   
-  const response = await fetch(`${protocol}://${host}/api/examples`, {
-    next: { revalidate: 3600 } // Cache for 1 hour
+  const response = await fetch(`${protocol}://${host}/api/analysis`, {
+    next: { revalidate: 1 } // Cache for 1 hour
   })
   
   if (!response.ok) {
-    throw new Error('Failed to fetch examples')
+    console.error("Failed to fetch analysis.", response)
+    return [] // Return an empty array on error
   }
 
   return response.json()
 }
 
 export default async function ExamplesPage() {
-  const examples = await getExamples()
+  const analyses = await getAnalyses()
 
   return (
     <div className="flex justify-center min-h-screen bg-slate-50">
-      <div className="container max-w-4xl px-4 py-12">
+      <div className="container max-w-7xl px-4 py-12">
         <h1 className="text-3xl font-bold mb-8 text-center">Company Analysis Examples</h1>
-        <ExampleSelector examples={examples} />
+        <AnalysisTable analyses={analyses} />
         <Waitlist />
       </div>
     </div>

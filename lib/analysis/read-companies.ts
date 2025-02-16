@@ -95,8 +95,38 @@ export async function getCompanyFilingText(filing: FilingMetadata): Promise<stri
  * @param plainText
  */
 export function parseForm10K(plainText: string): Form10K {
+
+    let item1 = getTextBetween(plainText, 'Item 1.&#160;&#160;&#160;&#160;Business', 'Item 1A.&#160;&#160;&#160;&#160;Risk Factors');
+    if(item1 == "") {
+        item1 = getTextBetween(plainText, 'Item 1. Business', 'Item 1A. Risk Factors')
+    }
+    if(item1 == "") {
+        item1 = getTextBetween(plainText, 'ITEM 1. BUSINESS', 'ITEM 1A. RISK FACTORS')
+    }
+    if(item1 == "") {
+        item1 = getTextBetween(plainText, 'Item 1.Business', 'Item 1A. Risk Factors')
+    }
+    if(item1 == "") {
+        item1 = getTextBetween(plainText, 'Item 1.Business', 'Item 1A.Risk Factors')
+    }
+    
+
+    let item1a = getTextBetween(plainText, 'Item 1A.&#160;&#160;&#160;&#160;Risk Factors', 'Item 1B.&#160;&#160;&#160;&#160;Unresolved Staff Comments');
+    if(item1a == "") {
+        item1a = getTextBetween(plainText, 'Item 1A. Risk Factors', 'Item 1B. Unresolved Staff Comments')
+    }
+    if(item1a == "") {
+        item1a = getTextBetween(plainText, 'ITEM 1A. RISK FACTORS', 'ITEM 1B. UNRESOLVED STAFF COMMENTS')
+    }
+    if(item1a == "") {
+        item1a = getTextBetween(plainText, 'Item 1A. Risk Factors', 'Item 1B.Unresolved Staff Comments')
+    }
+    if(item1a == "") {
+        item1a = getTextBetween(plainText, 'Item 1A.Risk Factors', 'Item 1B.Unresolved Staff Comments')
+    }
+
     return {
-        item1: getTextBetween(plainText, 'Item 1.&#160;&#160;&#160;&#160;Business', 'Item 1A.&#160;&#160;&#160;&#160;Risk Factors'),
-        item1a: getTextBetween(plainText, 'Item 1A.&#160;&#160;&#160;&#160;Risk Factors', 'Item 1B.&#160;&#160;&#160;&#160;Unresolved Staff Comments')
+        item1: item1,
+        item1a: item1a,
     };
 }
