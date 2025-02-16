@@ -1,4 +1,4 @@
-import {getTextBetween} from "@/lib/string-utils";
+import {getAllSubstringsBetween} from "@/lib/string-utils";
 import {Company, FilingMetadata, Form10K} from "@/lib/analysis/interfaces";
 
 const header = {
@@ -96,37 +96,28 @@ export async function getCompanyFilingText(filing: FilingMetadata): Promise<stri
  */
 export function parseForm10K(plainText: string): Form10K {
 
-    let item1 = getTextBetween(plainText, 'Item 1.&#160;&#160;&#160;&#160;Business', 'Item 1A.&#160;&#160;&#160;&#160;Risk Factors');
-    if(item1 == "") {
-        item1 = getTextBetween(plainText, 'Item 1. Business', 'Item 1A. Risk Factors')
-    }
-    if(item1 == "") {
-        item1 = getTextBetween(plainText, 'ITEM 1. BUSINESS', 'ITEM 1A. RISK FACTORS')
-    }
-    if(item1 == "") {
-        item1 = getTextBetween(plainText, 'Item 1.Business', 'Item 1A. Risk Factors')
-    }
-    if(item1 == "") {
-        item1 = getTextBetween(plainText, 'Item 1.Business', 'Item 1A.Risk Factors')
-    }
-    
+    // let item1SearchResults = getAllSubstringsBetween(plainText, /ITEM(?:(?:\s|&#160;|\t))*1\.(?:(?:\s|&#160;|\t))*BUSINESS/i, /ITEM(?:(?:\s|&#160;|\t))*1A\.(?:(?:\s|&#160;|\t))*RISK\sFACTORS/i);
+    // let item1aSearchResults = getAllSubstringsBetween(plainText, /ITEM(?:(?:\s|&#160;|\t))*1A\.(?:(?:\s|&#160;|\t))*RISK\sFACTORS/i, /ITEM(?:(?:\s|&#160;|\t))*1B\.(?:(?:\s|&#160;|\t))*UNRESOLVED\sSTAFF\sCOMMENTS/i);
 
-    let item1a = getTextBetween(plainText, 'Item 1A.&#160;&#160;&#160;&#160;Risk Factors', 'Item 1B.&#160;&#160;&#160;&#160;Unresolved Staff Comments');
-    if(item1a == "") {
-        item1a = getTextBetween(plainText, 'Item 1A. Risk Factors', 'Item 1B. Unresolved Staff Comments')
-    }
-    if(item1a == "") {
-        item1a = getTextBetween(plainText, 'ITEM 1A. RISK FACTORS', 'ITEM 1B. UNRESOLVED STAFF COMMENTS')
-    }
-    if(item1a == "") {
-        item1a = getTextBetween(plainText, 'Item 1A. Risk Factors', 'Item 1B.Unresolved Staff Comments')
-    }
-    if(item1a == "") {
-        item1a = getTextBetween(plainText, 'Item 1A.Risk Factors', 'Item 1B.Unresolved Staff Comments')
+    const item1SearchResults = getAllSubstringsBetween(plainText,
+        /ITEM(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*1(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*B(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*U(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*S(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*I(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*N(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*E(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*S(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*S/i,
+        /ITEM(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*1A(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*R(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*I(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*S(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*K(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*F(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*A(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*C(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*T(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*O(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*R(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*S/i);
+
+    const item1aSearchResults = getAllSubstringsBetween(plainText,
+        /ITEM(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*1A(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*R(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*I(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*S(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*K(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*F(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*A(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*C(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*T(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*O(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*R(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*S/i,
+        /ITEM(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*1B(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*U(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*N(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*R(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*E(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*S(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*O(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*L(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*V(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*E(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*D(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*S(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*T(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*A(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*F(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*F(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*C(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*O(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*M(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*M(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*E(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*N(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*T(?:(?:\s|&#160;|\t|&#8212;|-|[:\.]))*S/i);
+    
+    
+    // take the longest substring
+    const item1 = item1SearchResults.reduce((a, b) => a.length >= b.length ? a : b, '');
+    let item1a = item1aSearchResults.reduce((a, b) => a.length >= b.length ? a : b, '');
+    
+    if(item1a.length < 500) {
+        item1a = item1;
     }
 
     return {
-        item1: item1,
-        item1a: item1a,
+        item1: item1 ?? "",
+        item1a: item1a ?? "",
     };
 }
