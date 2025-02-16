@@ -8,7 +8,8 @@ export const businessModelSummary = '' +
     'Target customers/markets\n' +
     'Any unique aspects of their business model\n' +
     '\n' +
-    'Please write this as a flowing narrative rather than a list. Focus on explaining how the business actually works in practical terms, avoiding industry jargon where possible. If there are multiple business segments, explain how they fit together';
+    'Please write this as a flowing narrative rather than a list. Focus on explaining how the business actually works in practical terms, avoiding industry jargon where possible. If there are multiple business segments, explain how they fit together.' +
+    'Use html format for headers, paragraphs, line breaks, lists, tables and any emphasis needed.';
 
 export const businessModelIntroduction = '' +
     '# Business Model Analyst \n' +
