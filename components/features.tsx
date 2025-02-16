@@ -13,8 +13,8 @@ export function Features() {
           </p>
         </div>
         <Image src="/workflow.png" alt="workflow" width={1000} height={50} className="mb-14" />
-        <p className="text-muted-foreground">
-          The AI-powered workflow analyzes SEC filings to characterize business models and assess risks. The system evaluates financial data and applies traditional valuation methods, enhanced by AI support. The result: a comprehensive database of professional company analyses, available at your fingertips.
+        <p className="text-muted-foreground mb-4">
+          The AI-powered workflow analyzes SEC filings to characterize business models and assess risks. For a detailed explanation of the points of the analyses, please refer to the <a href="/scoring" className="text-blue-500 underline">scoring guide</a>. The system evaluates financial data and applies traditional valuation methods, enhanced by AI support. The result: a comprehensive database of professional company analyses, available at your fingertips.
         </p>
       </section>
     </div>
