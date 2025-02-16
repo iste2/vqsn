@@ -90,18 +90,23 @@ export async function GET(request: NextRequest) {
         const analyzedCompanies: CompanyAnalysis[] = [];
 
         for (const company of companies) {
-            const lastFiling = (await getCompanyFilingHistoryByCik(company.cik))
+            try {
+                const lastFiling = (await getCompanyFilingHistoryByCik(company.cik))
                 ?.find(filing => filing.form === '10-K');
 
-            if (!await shouldAnalyzeCompany(company, lastFiling, force)) {
-                console.log("Skipping analysis for", company.name);
-                continue;
-            }
+                if (!await shouldAnalyzeCompany(company, lastFiling, force)) {
+                    console.log("Skipping analysis for", company.name);
+                    continue;
+                }
 
-            const analysis = await generateAnalysisForSingleCompany(company);
-            if (analysis) {
-                await saveAnalysisToFirebase(analysis);
-                analyzedCompanies.push(analysis);
+                const analysis = await generateAnalysisForSingleCompany(company);
+                if (analysis) {
+                    await saveAnalysisToFirebase(analysis);
+                    analyzedCompanies.push(analysis);
+                }
+            } catch (error) {
+                console.error("Error generating analysis for", company.name, error);
+                continue;
             }
         }
 
