@@ -16,6 +16,7 @@ async function getAnalyses(): Promise<CompanyAnalysis[]> {
   
   if (!response.ok) {
     console.error("Failed to fetch analysis.", response)
+    return [] // Return an empty array on error
   }
 
   return response.json()
