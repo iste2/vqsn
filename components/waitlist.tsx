@@ -44,7 +44,7 @@ export function Waitlist() {
             Be the First to Know
           </h2>
           <p className="max-w-[700px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-            Join the waitlist to get early access and exclusive updates about VQSN&apos;s launch.
+            Join the waitlist to get early access and exclusive updates about TrueStockInsight&apos;s launch.
           </p>
           <form 
             onSubmit={handleSubmit} 

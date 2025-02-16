@@ -8,7 +8,7 @@ export function HeroImage() {
             <div className="absolute inset-0 bg-gradient-to-b from-white/0 to-white pointer-events-none z-10" />
             <Image
               src="/screenshot.png"
-              alt="VQSN Dashboard Preview"
+              alt="TrueStockInsight Dashboard Preview"
               fill
               className="object-contain"
               priority
