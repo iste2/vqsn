@@ -7,7 +7,7 @@ function ScoringPage() {
                 <section className="py-12 p-6">
                     <h2 className="text-3xl font-bold mb-4">A Comprehensive Guide to Business Model and Risk Analysis Scoring</h2>
                     <p className="mb-4">
-                        When analyzing a business through our scoring system, you'll see eleven key dimensions that together paint a complete picture of both the company's business model strengths and its competitive risks. Each dimension is scored from 0 to 10, with the business model aspects measuring strength (higher is stronger) and the risk aspects measuring protection (higher means lower risk).
+                        When analyzing a business through our scoring system, you&apos;ll see eleven key dimensions that together paint a complete picture of both the company&apos;s business model strengths and its competitive risks. Each dimension is scored from 0 to 10, with the business model aspects measuring strength (higher is stronger) and the risk aspects measuring protection (higher means lower risk).
                     </p>
                     <h3 className="text-xl font-semibold mb-2">Business Model Characteristics</h3>
                     <p className="mb-4">
@@ -18,7 +18,7 @@ function ScoringPage() {
                     </p>
                     <h3 className="text-xl font-semibold mb-2">Competitive Risk Assessment</h3>
                     <p className="mb-4">
-                        The second part evaluates competitive threats using Porter's Five Forces, where higher scores mean lower risks. Supplier Power scores indicate control over the supply chain – high scores (8-10) show strong negotiating positions with suppliers. Buyer Power reveals customer leverage, with high scores (8-10) indicating diverse, dependent customer bases. New Entrants scores show barrier strength against newcomers, where high scores (9-10) indicate strong market protection through patents, capital requirements, or regulations.
+                        The second part evaluates competitive threats using Porter&apos;s Five Forces, where higher scores mean lower risks. Supplier Power scores indicate control over the supply chain – high scores (8-10) show strong negotiating positions with suppliers. Buyer Power reveals customer leverage, with high scores (8-10) indicating diverse, dependent customer bases. New Entrants scores show barrier strength against newcomers, where high scores (9-10) indicate strong market protection through patents, capital requirements, or regulations.
                     </p>
                     <p className="mb-4">
                         Substitutes scores reveal how easily customers could switch to alternatives, with high scores (8-10) showing strong product differentiation or high switching costs. Competitive Rivalry ratings indicate current market competition intensity, where high scores (8-10) suggest stable market share in a rationally competitive environment.
