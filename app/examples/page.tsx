@@ -1,9 +1,9 @@
 import { headers } from 'next/headers'
 import { AnalysisTable } from "@/components/analysis-table"
 import { Waitlist } from "@/components/waitlist"
-import { CompanyAnalysis } from "@/lib/analysis/interfaces"
+import { CompanyAnalysisTableView } from "@/lib/analysis/interfaces"
 
-async function getAnalyses(): Promise<CompanyAnalysis[]> {
+async function getAnalyses(): Promise<CompanyAnalysisTableView[]> {
   // Get headers synchronously
   const headersList = await headers()
   // Convert to plain object to access get method
