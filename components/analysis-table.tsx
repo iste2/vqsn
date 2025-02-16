@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { CompanyAnalysis } from "@/lib/analysis/interfaces"
+import { CompanyAnalysis, CompanyAnalysisTableView } from "@/lib/analysis/interfaces"
 import {
   Table,
   TableBody,
@@ -48,7 +48,7 @@ interface ScoreFilters {
 }
 
 interface AnalysisTableProps {
-  analyses: CompanyAnalysis[]
+  analyses: CompanyAnalysisTableView[]
 }
 
 function ScoreBadge({ score }: { score: number }) {
@@ -155,6 +155,7 @@ export function AnalysisTable({ analyses }: AnalysisTableProps) {
   const [selectedAnalysis, setSelectedAnalysis] = useState<CompanyAnalysis | null>(null)
   const [searchQuery, setSearchQuery] = useState("")
   const [scoreFilters, setScoreFilters] = useState<ScoreFilters>(initialScoreFilters)
+  const [isLoading, setIsLoading] = useState<string | null>(null)
 
   const filteredAnalyses = analyses.filter((analysis) => {
     const searchLower = searchQuery.toLowerCase()
@@ -196,6 +197,20 @@ export function AnalysisTable({ analyses }: AnalysisTableProps) {
   const activeFilterCount = Object.values(scoreFilters).filter(
     filter => filter.min !== null || filter.max !== null
   ).length
+
+  async function handleViewDetails(analysis: CompanyAnalysisTableView) {
+    try {
+      setIsLoading(analysis.company.ticker)
+      const response = await fetch(`/api/analysis?ticker=${analysis.company.ticker}`)
+      if (!response.ok) throw new Error('Failed to fetch analysis details')
+      const detailedAnalysis = await response.json()
+      setSelectedAnalysis(detailedAnalysis)
+    } catch (error) {
+      console.error('Error fetching analysis details:', error)
+    } finally {
+      setIsLoading(null)
+    }
+  }
 
   return (
     <div className="space-y-4">
@@ -406,9 +421,10 @@ export function AnalysisTable({ analyses }: AnalysisTableProps) {
                 <TableCell className="text-right">
                   <Button
                     variant="outline"
-                    onClick={() => setSelectedAnalysis(analysis)}
+                    onClick={() => handleViewDetails(analysis)}
+                    disabled={isLoading === analysis.company.ticker}
                   >
-                    View Details
+                    {isLoading === analysis.company.ticker ? 'Loading...' : 'View Details'}
                   </Button>
                 </TableCell>
               </TableRow>

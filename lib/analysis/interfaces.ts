@@ -61,3 +61,22 @@ export interface CompanyAnalysis {
         competitiveRivalry: PorterForce;
     };
 }
+
+export interface CompanyAnalysisTableView {
+    company: Company;
+    characteristics: {
+        shortLifeCycleBrands: { score: number };
+        essentialProducts: { score: number };
+        premiumProvider: { score: number };
+        regulationDriven: { score: number };
+        highScalability: { score: number };
+        costLeader: { score: number };
+    };
+    porterAnalysis: {
+        supplierPower: { score: number };
+        buyerPower: { score: number };
+        newEntrants: { score: number };
+        substitutes: { score: number };
+        competitiveRivalry: { score: number };
+    };
+}
