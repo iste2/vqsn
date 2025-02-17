@@ -11,6 +11,13 @@ export async function GET(request: NextRequest) {
         if (ticker) {
             const analysisSnapshot = await adminDb
                 .collection(analysisCollectionName)
+                .select(
+                    'timestamp',
+                    'company',
+                    'summary',
+                    'characteristics',
+                    'porterAnalysis',
+                )
                 .where('company.ticker', '==', ticker)
                 .orderBy('timestamp', 'desc')
                 .limit(1)
@@ -27,6 +34,21 @@ export async function GET(request: NextRequest) {
         // Otherwise return table view for all companies
         const analysisSnapshot = await adminDb
             .collection(analysisCollectionName)
+            .select(
+                'timestamp',
+                'company',
+                'characteristics.shortLifeCycleBrands.score',
+                'characteristics.essentialProducts.score',
+                'characteristics.premiumProvider.score',
+                'characteristics.regulationDriven.score',
+                'characteristics.highScalability.score',
+                'characteristics.costLeader.score',
+                'porterAnalysis.supplierPower.score',
+                'porterAnalysis.buyerPower.score',
+                'porterAnalysis.newEntrants.score',
+                'porterAnalysis.substitutes.score',
+                'porterAnalysis.competitiveRivalry.score'
+            )
             .orderBy('timestamp', 'desc')
             .get();
 
@@ -34,30 +56,11 @@ export async function GET(request: NextRequest) {
         const latestAnalysesByCompany = new Map<string, CompanyAnalysisTableView>();
 
         analysisSnapshot.forEach((doc) => {
-            const analysis = doc.data() as CompanyAnalysis;
+            const analysis = doc.data() as CompanyAnalysisTableView;
             const ticker = analysis.company.ticker;
 
             if (!latestAnalysesByCompany.has(ticker)) {
-                // Convert to table view
-                const tableView: CompanyAnalysisTableView = {
-                    company: analysis.company,
-                    characteristics: {
-                        shortLifeCycleBrands: { score: analysis.characteristics.shortLifeCycleBrands.score },
-                        essentialProducts: { score: analysis.characteristics.essentialProducts.score },
-                        premiumProvider: { score: analysis.characteristics.premiumProvider.score },
-                        regulationDriven: { score: analysis.characteristics.regulationDriven.score },
-                        highScalability: { score: analysis.characteristics.highScalability.score },
-                        costLeader: { score: analysis.characteristics.costLeader.score }
-                    },
-                    porterAnalysis: {
-                        supplierPower: { score: analysis.porterAnalysis.supplierPower.score },
-                        buyerPower: { score: analysis.porterAnalysis.buyerPower.score },
-                        newEntrants: { score: analysis.porterAnalysis.newEntrants.score },
-                        substitutes: { score: analysis.porterAnalysis.substitutes.score },
-                        competitiveRivalry: { score: analysis.porterAnalysis.competitiveRivalry.score }
-                    }
-                };
-                latestAnalysesByCompany.set(ticker, tableView);
+                latestAnalysesByCompany.set(ticker, analysis);
             }
         });
 
