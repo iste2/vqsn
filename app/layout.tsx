@@ -9,7 +9,7 @@ const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
   title: "TrueStockInsight",
-  description: "AI stock analysis and portfolio management",
+  description: "Professional Company Analysis, Instantly",
 }
 
 export default function RootLayout({
