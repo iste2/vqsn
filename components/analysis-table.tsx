@@ -27,6 +27,7 @@ import {
 import { Badge } from "@/components/ui/badge"
 import { FilterIcon } from "lucide-react"
 import { AnalysisDetailsDialog } from "@/components/analysis-details-dialog"
+import {getAnalysis} from "@/app/actions/analysis";
 
 interface ScoreFilter {
   min: number | null
@@ -177,9 +178,7 @@ export function AnalysisTable({ analyses }: AnalysisTableProps) {
   async function handleViewDetails(analysis: CompanyAnalysisTableView) {
     try {
       setIsLoading(analysis.company.ticker)
-      const response = await fetch(`/api/analysis?ticker=${analysis.company.ticker}`)
-      if (!response.ok) throw new Error('Failed to fetch analysis details')
-      const detailedAnalysis = await response.json()
+      const detailedAnalysis = await getAnalysis(analysis.company.ticker)
       setSelectedAnalysis(detailedAnalysis)
     } catch (error) {
       console.error('Error fetching analysis details:', error)
