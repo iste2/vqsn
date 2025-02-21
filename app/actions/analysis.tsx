@@ -8,15 +8,14 @@ export async function getAnalysis(ticker: string): Promise<CompanyAnalysis> {
     try {
         const analysisSnapshot = await adminDb
             .collection(analysisCollectionName)
+            .orderBy('timestamp', 'desc')
             .select(
-                'timestamp',
                 'company',
                 'summary',
                 'characteristics',
                 'porterAnalysis',
             )
             .where('company.ticker', '==', ticker)
-            .orderBy('timestamp', 'desc')
             .limit(1)
             .get();
 
