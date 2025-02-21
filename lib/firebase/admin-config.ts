@@ -4,8 +4,10 @@ import { getFirestore, Firestore } from 'firebase-admin/firestore'
 
 // Declare global variables to hold our instances
 declare global {
-  var _firebaseApp: App | undefined
-  var _firestoreInstance: Firestore | undefined
+  // eslint-disable-next-line no-var
+  var _firebaseApp: App | undefined;
+  // eslint-disable-next-line no-var
+  var _firestoreInstance: Firestore | undefined;
 }
 
 // Initialize Firebase Admin if not already initialized
