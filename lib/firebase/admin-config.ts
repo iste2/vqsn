@@ -1,14 +1,31 @@
-import { initializeApp, getApps, cert } from 'firebase-admin/app'
-import { getFirestore } from 'firebase-admin/firestore'
+// admin-config.ts
+import { initializeApp, cert, App } from 'firebase-admin/app'
+import { getFirestore, Firestore } from 'firebase-admin/firestore'
 
-const firebaseAdminConfig = {
-  credential: cert({
-    projectId: process.env.FIREBASE_PROJECT_ID,
-    clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-    privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
-  }),
+// Declare global variables to hold our instances
+declare global {
+  var _firebaseApp: App | undefined
+  var _firestoreInstance: Firestore | undefined
 }
 
-const app = getApps().length === 0 ? initializeApp(firebaseAdminConfig) : getApps()[0]
-export const adminDb = getFirestore(app)
-adminDb.settings({ ignoreUndefinedProperties: true }) 
+// Initialize Firebase Admin if not already initialized
+if (!global._firebaseApp) {
+  const firebaseAdminConfig = {
+    credential: cert({
+      projectId: process.env.FIREBASE_PROJECT_ID,
+      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+      privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+    }),
+  }
+
+  global._firebaseApp = initializeApp(firebaseAdminConfig, "app")
+}
+
+// Initialize Firestore if not already initialized
+if (!global._firestoreInstance) {
+  global._firestoreInstance = getFirestore(global._firebaseApp)
+  global._firestoreInstance.settings({ ignoreUndefinedProperties: true })
+}
+
+// Export the global instance
+export const adminDb = global._firestoreInstance
