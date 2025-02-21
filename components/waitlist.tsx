@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import {createWaitlistEntry} from "@/app/actions/waitlist";
 
 export function Waitlist() {
   const [email, setEmail] = useState("")
@@ -14,18 +15,7 @@ export function Waitlist() {
     setIsSubmitting(true)
     
     try {
-      const response = await fetch('/api/waitlist', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email }),
-      })
-
-      if (!response.ok) {
-        throw new Error('Failed to join waitlist')
-      }
-
+      await createWaitlistEntry(email);
       setStatus("success")
       setEmail("")
     } catch (error) {
